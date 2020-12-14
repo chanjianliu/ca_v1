@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Members Listing</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div th:replace="fragments/general.html :: menu"></div>
+	<h1>User Table</h1>
+	<!-- Add Hyperlink -->
+	
+	<a href="AddUser.html" th:href="@{/user/adduser}">Add User</a>
+	
+	<h2 th:if="${not #lists.isEmpty(users)}">User List</h2>
+	<table th:if="${not #lists.isEmpty(users)}">
+		<tr>
+		<th>ID</th>
+		<th>NAME</th>
+		<th>ROLE</th>
+		<th>USABLE</th>
+		<th>Edit User</th>
+		<th>Delete User</th>
+		</tr>
+
+        <tr th:each="user:${users}" class="table-row">
+        <td th:text="${user.id}">ID</td>
+        <td th:text="${user.username}">Name</td>
+        <td th:text="${user.role}">Role</td>
+        
+        <td><a href="EditUser.html"
+				th:href="@{/user/edit/}+${user.id}">Edit</a></td>
+			<td><a href="DeleteUser.html"
+				th:href="@{/user/delete/}+${user.id}">Delete</a></td>
+
+		</tr>
+        
+        
+	</table>
+	  <div th:replace="fragments/general.html :: footer"></div>
+</body>
+</html>
