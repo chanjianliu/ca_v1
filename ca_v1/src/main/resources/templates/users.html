@@ -2,44 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Members Listing</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
+<title>User Listing</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
-</head>
+
 <body>
-	<header th:insert="fragments/general.html :: header"> </header>
-	<div th:replace="fragments/general.html :: menu"></div>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
 	<h1>User Table</h1>
 	<!-- Add Hyperlink -->
-	
-	<a href="AddUser.html" th:href="@{/user/adduser}">Add User</a>
-	
+
+	<a href="userform.html" th:href="@{/user/adduser}">Add User</a>
+
 	<h2 th:if="${not #lists.isEmpty(users)}">User List</h2>
 	<table th:if="${not #lists.isEmpty(users)}">
-		<tr>
-		<th>ID</th>
-		<th>NAME</th>
-		<th>ROLE</th>
-		<th>USABLE</th>
-		<th>Edit User</th>
-		<th>Delete User</th>
-		</tr>
+		<tr >
+			<th >ID</th>
+			<th >Name</th>
+			<th >User Name</th>
+			<th >Role</th>
 
-        <tr th:each="user:${users}" class="table-row">
-        <td th:text="${user.id}">ID</td>
-        <td th:text="${user.username}">Name</td>
-        <td th:text="${user.role}">Role</td>
-        
-        <td><a href="EditUser.html"
-				th:href="@{/user/edit/}+${user.id}">Edit</a></td>
-			<td><a href="DeleteUser.html"
-				th:href="@{/user/delete/}+${user.id}">Delete</a></td>
 
 		</tr>
-        
-        
+
+		<tr th:each="user:${users}" class="table-row">
+			<td > <a href="showdetail.html" th:href="@{/user/showuser/}+${user.id}" th:text=${user.id}>ID</a></td>
+			<td th:text=${user.name}>Name</td>
+			<td th:text=${user.username}>User Name</td>
+			<td th:text=${user.role}>Role</td>
+
+
+		</tr>
+
+
 	</table>
-	  <div th:replace="fragments/general.html :: footer"></div>
+	</br>
+	<div th:replace="layout/layout.html :: footer"></div>
 </body>
 </html>

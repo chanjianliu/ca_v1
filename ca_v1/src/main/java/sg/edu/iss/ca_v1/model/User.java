@@ -20,6 +20,24 @@ public class User {
 		super(); 
 	}
 	
+	public User(String username, UserRole role) {
+		super();
+		this.username = username;
+		this.role = role;
+	}
+	public User(int id, String name, UserRole role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.role = role;
+	}
+	public User(String name, String username, UserRole role) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.role = role;
+	}
+
 	public User(String name, String username, String password, UserRole role) {
 		super();
 		this.name = name;
@@ -39,6 +57,8 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
+
+	
 
 	public void setUsername(String username) {
 		this.username = username;

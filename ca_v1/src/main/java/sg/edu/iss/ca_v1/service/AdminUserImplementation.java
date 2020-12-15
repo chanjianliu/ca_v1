@@ -20,11 +20,12 @@ public class AdminUserImplementation implements AdminUserInterface {
 	private UserRepository urepo;
 
 	@Transactional
-	public boolean saveUser(User user) {
-		if (urepo.save(user) != null)
-			return true;
-		else
-			return false;
+	public void saveUser(User user) {
+//		if (urepo.save(user) != null)
+//			return true;
+//		else
+//			return false;
+		urepo.save(user);
 	}
 
 	@Transactional
@@ -33,7 +34,7 @@ public class AdminUserImplementation implements AdminUserInterface {
 	}
 
 	@Transactional
-	public User findUserById(Integer id) {
+	public User findById(Integer id) {
 		return urepo.findById(id).get();
 	}
 
@@ -42,28 +43,20 @@ public class AdminUserImplementation implements AdminUserInterface {
 		urepo.delete(user);
 
 	}
-
 	@Transactional
-	public void updateUser(User user) {
-		urepo.save(user);
-
+	
+	public boolean authenticate(User user) {
+		User dbUser = urepo.findUserByUsername(user.getUsername());
+		if (dbUser != null 
+				&& dbUser.getUsername().equals(user.getUsername())
+				&& dbUser.getPassword().equals(user.getPassword()))
+			return true;
+		else
+			return false;
 	}
 
-	@Transactional
-
-	public ArrayList<String> findAllUsers() {
-		List<User> users = urepo.findAll();
-		ArrayList<String> names = new ArrayList<String>();
-		for (Iterator<User> iterator = users.iterator(); iterator.hasNext();) {
-			User user = (User) iterator.next();
-			names.add(user.getUsername());
-		}
-		return names;
-	}
-
-	@Transactional
-	public User findUserByName(String username) {
-		return urepo.findUserByName(username).get(0);
-	}
+	
+	
+	
 
 }

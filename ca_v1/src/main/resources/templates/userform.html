@@ -3,36 +3,48 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Member Form</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
-	<header th:insert="fragments/general.html :: header"> </header>
-	<div th:replace="fragments/general.html :: menu"></div>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
 	
 	<h1>User Form</h1>
-	<form action="#" th:object=${user} th:action="@{/user/save}"
-		method="post">
+	<form action="#" th:object="${user}" th:action="@{/user/save}"
+		method="post" class="form-horizontal">
 		<fieldset>
 
 			<input type="hidden" th:field="*{id}">
 		</fieldset>
 		<fieldset>
-			Name: <input type="text" th:field="*{username}">
+			Full Name: <input type="text" th:field="*{name}">
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+		</fieldset>
+		<fieldset>
+			User Name <input type="text" th:field="*{username}">
 			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 		</fieldset>
 		<fieldset>
-			Role: <input type="text" th:field="*{role}">
+			Password <input type="password" th:field="*{password}">
+			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 		</fieldset>
 		
 		<fieldset>
-			<input type="submit" value="Save"/>
-			&nbsp; &nbsp; 	
-			<input type="reset" value="Reset"/>
+			Role 
+			<select th:field="*{role}">
+				<option value="ADMIN">ADMIN</option>
+				<option value="MECHANIC">Mechanic</option>
+			</select>
+			<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+		</fieldset>
+		
+		<fieldset>
+			<button type="submit" >Save</button>
+			<button type="reset" >Reset</button>
 		</fieldset>
 
 		
 	</form>
-	<div th:replace="fragments/general.html :: footer"></div>
+	<div th:replace="layout/layout.html :: footer"></div>
 </body>
 </html>
