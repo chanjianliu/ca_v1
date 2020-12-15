@@ -40,7 +40,7 @@ public class Product {
 
 	public Product(String name, String brand, LocalDate dom, String colour, double oriPrice, double wholesalePrice,
 			double retailPrice, double partnerPrice, String description, String dimension, String category,
-			int reorderLevel, int minReorderQuantity, Supplier supplier, Inventory inventory) {
+			int reorderLevel, int minReorderQuantity, Supplier supplier) {
 		super();
 		this.name = name;
 		this.brand = brand;
@@ -56,7 +56,7 @@ public class Product {
 		this.reorderLevel = reorderLevel;
 		this.minReorderQuantity = minReorderQuantity;
 		this.supplier = supplier;
-		this.inventory = inventory;
+		this.inventory = new Inventory();
 	}
 
 	public int getId() {

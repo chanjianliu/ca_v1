@@ -15,35 +15,71 @@ public class StockUsage {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private int carId;
+	private String customerName;
 	@OneToMany (mappedBy = "stockUsage")
-	private List<StockUsageInventory> stockUsageInventory;
+	private List<StockUsageInventory> usageOfTheCustomer;
+	
+	
+	public StockUsage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public StockUsage(String customerName) {
+		super();
+		this.customerName = customerName;
+	}
 
 	public StockUsage(int carId) {
 		super();
 		this.carId = carId;
 	}
 
-	public StockUsage() {
-		super();
-	}
-
 	public int getId() {
 		return id;
 	}
-	
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
 	public int getCarId() {
 		return carId;
 	}
 
+
+
 	public void setCarId(int carId) {
 		this.carId = carId;
 	}
-	
-	public List<StockUsageInventory> getStockUsageInventory() {
-		return stockUsageInventory;
+
+
+
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setStockUsageInventory(List<StockUsageInventory> stockUsageInventory) {
-		this.stockUsageInventory = stockUsageInventory;
+
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
+
+
+
+	public List<StockUsageInventory> getUsageOfTheCustomer() {
+		return usageOfTheCustomer;
+	}
+
+
+
+	public void setUsageOfTheCustomer(List<StockUsageInventory> usageOfTheCustomer) {
+		this.usageOfTheCustomer = usageOfTheCustomer;
+	}
+
+	
 }
