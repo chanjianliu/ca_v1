@@ -43,16 +43,36 @@ public class CatalogueController {
 	}
 	@RequestMapping(value = "/saveusagerecord", method = RequestMethod.POST)
 	public String saveFixRecord(@ModelAttribute("stockUsageInventory")@Valid StockUsageInventory usage, BindingResult bindingResult, Model model) {
-//		cservice.saveInventory(usage);
-//		cservice.saveStockUsage(usage);
+		cservice.saveInventory(usage);
+		cservice.saveStockUsage(usage);
 		cservice.saveStockUsageInventory(usage);
-		return "forward:/catalogue/list";
+		return "forward:/catalogue/listusageofthiscustomer";
 	}
-	@RequestMapping(value = "/usage")
-	public String list(Model model) {
+	@RequestMapping(value = "/listusageofthiscustomer")
+	public String listUsageOfThisCustomer(Model model) {
 		List<StockUsageInventory> inventories = cservice.listAllUsages();
 		model.addAttribute("inventories", inventories);
 		return "catalogue";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

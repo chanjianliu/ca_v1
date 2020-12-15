@@ -58,7 +58,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	@Override
 	@Transactional
 	public List<Inventory> findPartByColor(String color) {
-		List<Product> pros = prepo.findByColor(color);
+		List<Product> pros = prepo.findByColour(color);
 		List<Inventory> invList = new ArrayList<>();
 		for(Product pro : pros) {
 			Inventory inv = irepo.getOne(pro.getId());

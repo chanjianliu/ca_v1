@@ -1,5 +1,6 @@
 package sg.edu.iss.ca_v1.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -14,11 +15,18 @@ public class StockUsage {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+
 	private int carId;
 	private String customerName;
 	@OneToMany (mappedBy = "stockUsage")
 	private List<StockUsageInventory> usageOfTheCustomer;
 	
+	public StockUsage(int carId, String customerName) {
+		super();
+		this.carId = carId;
+		this.customerName = customerName;
+		this.usageOfTheCustomer = new ArrayList<StockUsageInventory>();
+	}
 	
 	public StockUsage() {
 		super();

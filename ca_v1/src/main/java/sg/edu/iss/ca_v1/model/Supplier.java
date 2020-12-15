@@ -21,7 +21,7 @@ public class Supplier {
 	private String phoneNumber;
 	@OneToMany (mappedBy = "supplier")
 	private List<Product> productList;
-
+	
 	public Supplier() {
 		super();
 		// TODO Auto-generated constructor stub

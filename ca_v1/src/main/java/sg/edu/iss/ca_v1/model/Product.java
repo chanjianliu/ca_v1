@@ -29,9 +29,11 @@ public class Product {
 	private String category;
 	private int reorderLevel; // reorder level
 	private int minReorderQuantity; // minimum reorder quantity
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Supplier supplier;
-	@OneToOne
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Inventory inventory;
 	
 	public Product() {
@@ -56,7 +58,7 @@ public class Product {
 		this.reorderLevel = reorderLevel;
 		this.minReorderQuantity = minReorderQuantity;
 		this.supplier = supplier;
-		this.inventory = new Inventory();
+		//this.inventory = new Inventory();
 	}
 
 	public int getId() {
