@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+<body>
+
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+	<h2>New User</h2>
+
+	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
+
+	<form action="#" th:object="${stockUsageInventory}" th:action="@{/catalogue/saveusagerecord}"
+		method="post">
+		<fieldset>
+			<input type="hidden" th:field="*{id}">
+		</fieldset>
+		<fieldset>
+			Customer Name <input type="text" th:field="*{stockUsage.customerName}">
+			<p th:if="${#fields.hasErrors('stockUsage.customerName')}" th:errors="*{stockUsage.customerName}"></p>
+		</fieldset>
+		<fieldset>
+			Car Id <input type="text" th:field="*{stockUsage.carId}">
+			<p th:if="${#fields.hasErrors('stockUsage.carId')}" th:errors="*{stockUsage.carId}"></p>
+		</fieldset>
+		<fieldset>
+			Quantity <input type="number" th:field="*{quantity}">
+			<p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
+		</fieldset>
+		<fieldset>
+			Date <input type="date" th:field="*{registrationDate}">
+			<p th:if="${#fields.hasErrors('registrationDate')}" th:errors="*{registrationDate}"></p>
+		</fieldset>
+		<fieldset>
+			Inventory <input type="text" th:field="*{inventory.product.id}">
+			<p th:if="${#fields.hasErrors('inventory.product.id')}" th:errors="*{inventory.product.id}"></p>
+		</fieldset>
+		
+		<fieldset>
+			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+				type="reset" value="Reset" />
+		</fieldset>
+	</form>
+
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>

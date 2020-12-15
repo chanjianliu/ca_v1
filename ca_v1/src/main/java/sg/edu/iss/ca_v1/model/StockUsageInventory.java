@@ -15,9 +15,9 @@ public class StockUsageInventory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne (cascade = CascadeType.PERSIST)
 	private StockUsage stockUsage; //connect back to which car
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne (cascade = CascadeType.PERSIST)
 	private Inventory inventory; //connect back to which product
 	private int quantity; //quantity of the product used
 	private LocalDate registrationDate; //date the product was used on the car
