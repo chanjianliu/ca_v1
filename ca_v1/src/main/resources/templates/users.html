@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>User Listing</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+	<h1>User Table</h1>
+	<!-- Add Hyperlink -->
+
+	<a href="userform.html" th:href="@{/user/adduser}">Add User</a>
+
+	<h2 th:if="${not #lists.isEmpty(users)}">User List</h2>
+	<table th:if="${not #lists.isEmpty(users)}">
+		<tr >
+			<th >ID</th>
+			<th >Name</th>
+			<th >User Name</th>
+			<th >Role</th>
+
+
+		</tr>
+
+		<tr th:each="user:${users}" class="table-row">
+			<td > <a href="showdetail.html" th:href="@{/user/showuser/}+${user.id}" th:text=${user.id}>ID</a></td>
+			<td th:text=${user.name}>Name</td>
+			<td th:text=${user.username}>User Name</td>
+			<td th:text=${user.role}>Role</td>
+
+
+		</tr>
+
+
+	</table>
+	</br>
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>
