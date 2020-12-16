@@ -31,13 +31,11 @@ public class Product {
 	private int minReorderQuantity; // minimum reorder quantity
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Supplier supplier;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Inventory inventory;
-	
 	public Product() {
 		super();
 	}
-
 	public Product(String name, String brand, LocalDate dom, String colour, double oriPrice, double wholesalePrice,
 			double retailPrice, double partnerPrice, String description, String dimension, String category,
 			int reorderLevel, int minReorderQuantity, Supplier supplier, Inventory inventory) {

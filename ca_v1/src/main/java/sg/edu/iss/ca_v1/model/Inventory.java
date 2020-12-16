@@ -27,12 +27,11 @@ public class Inventory{
 		super();
 	}
 
-	public Inventory(int shelfLocation, ProductState productState, int quantity, Product product) {
+	public Inventory(int shelfLocation, ProductState productState, int quantity) {
 		super();
 		this.shelfLocation = shelfLocation;
 		this.productState = productState;
 		this.quantity = quantity;
-		this.product = product;
 	}
 
 	public List<StockUsageInventory> getStockUsageInventory() {

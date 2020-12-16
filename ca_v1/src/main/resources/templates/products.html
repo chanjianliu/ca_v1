@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Members Listing</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<div th:insert="fragments/general.html :: header"></div>
+	<div th:replace="fragments/general.html :: menu"></div>
+
+	<h1>Product Listing</h1>
+	<h2 th:if="${not #lists.isEmpty(products)}">Product List is not
+		empty</h2>
+	<table th:if="${not #lists.isEmpty(products)}">
+		<tr>
+			<th>Brand</th>
+			<th>Category</th>
+			<th>Colour</th>
+			<th>Description</th>
+			<th>Dimension<th>
+			<th>Dom</th>
+			<th>id</th>
+			<th>minReorderQuantity</th>
+			<th>name</th>
+			<th>oriPrice</th>
+			<th>partnerPrice</th>
+			<th>reorderLevel</th>
+			<th>retailPrice</th>
+			<th>wholesalePrice</th>
+		</tr>
+		<tr th:each="product:${products}" class="table-row">
+			<td th:text=${product.brand}></td>
+			<td th:text=${product.category}></td>
+			<td th:text=${product.colour}></td>
+			<td th:text=${product.description}></td>
+			<td th:text=${product.dimension}></td>
+			<td th:text=${product.dom}></td>
+			<td th:text=${product.id}></td>
+			<td th:text=${product.minReorderQuantity}></td>
+			<td th:text=${product.name}></td>
+			<td th:text=${product.oriPrice}></td>
+			<td th:text=${product.partnerPrice}></td>
+			<td th:text=${product.reorderLevel}></td>
+			<td th:text=${product.retailPrice}></td>
+			<td th:text=${product.wholesalePrice}></td>
+		</tr>
+	</table>
+	<div th:replace="fragments/general.html :: footer"></div>
+
+</body>
+</html>

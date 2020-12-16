@@ -20,6 +20,19 @@ public class Supplier {
 	private String phoneNumber;
 	@OneToMany (mappedBy = "supplier")
 	private List<Product> productList;
+	
+	public Supplier() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Supplier(String name, String address, String email, String phoneNumber) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+	}
 
 	public int getId() {
 		return id;
