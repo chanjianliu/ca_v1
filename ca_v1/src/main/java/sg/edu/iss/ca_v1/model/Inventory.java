@@ -15,8 +15,12 @@ public class Inventory{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+//	@Column(unique=true, nullable = false)
 	private int shelfLocation;
+//	@Column(nullable = false)
 	private ProductState productState;
+//	@Min(1)
+//	@Column(nullable = false)
 	private int quantity;
 	@OneToOne(mappedBy = "inventory")
 	private Product product;

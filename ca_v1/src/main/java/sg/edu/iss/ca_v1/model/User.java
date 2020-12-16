@@ -1,9 +1,12 @@
 package sg.edu.iss.ca_v1.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class User {
@@ -11,9 +14,14 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column (unique=true, nullable = false)
 	private String name;
+	@Column (unique=true, nullable = false)
 	private String username;
+	@Length(min = 3, max = 15)
+	@Column (unique=true, nullable = false)
 	private String password;
+	@Column (nullable = false)
 	private UserRole role;
 
 	public User() {
@@ -26,13 +34,6 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.role = role;
-	}
-	
-	public User(String name, String username, String password) {
-		super();
-		this.name = name;
-		this.username = username;
-		this.password = password;
 	}
 
 	public String getName() {
@@ -113,4 +114,5 @@ public class User {
 			return false;
 		return true;
 	}
+
 }

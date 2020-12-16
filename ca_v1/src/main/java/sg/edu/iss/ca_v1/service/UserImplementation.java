@@ -47,4 +47,11 @@ public class UserImplementation implements UserInterface {
 			return false;
 	}
 	
+	public User findUserById(int id) {
+		return urepo.findUserById(id);
+	}
+	
+	public boolean equals(User other) {
+		return urepo.equals(other);
+	}
 }

@@ -10,4 +10,6 @@ public interface UserInterface {
 	public void deleteUser(User user);
 	public List<User> listAllUser();
 	public boolean authenticate (User user); 
+	public User findUserById(int id);
+	public boolean equals(User other);
 }

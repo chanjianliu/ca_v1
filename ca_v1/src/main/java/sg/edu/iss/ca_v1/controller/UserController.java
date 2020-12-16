@@ -51,8 +51,13 @@ public class UserController {
 			return "addUser";
 		}
 		
-		uservice.createUser(user);
-		model.addAttribute("users", uservice.listAllUser());
-		return "userList";
+		User dbUser = uservice.findUserById(user.getId());
+		
+		if (dbUser != null)
+			uservice.updateUser(user);
+		else
+			uservice.createUser(user);
+		
+		return "forward:/user/list";
 	}
 }

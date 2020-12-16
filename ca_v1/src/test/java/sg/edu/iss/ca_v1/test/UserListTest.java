@@ -10,7 +10,7 @@ import sg.edu.iss.ca_v1.service.UserImplementation;
 import sg.edu.iss.ca_v1.service.UserInterface;
 
 @SpringBootTest
-class CaV1ApplicationTests {
+class UserListTest {
 
 	@Autowired
 	UserInterface uservice;

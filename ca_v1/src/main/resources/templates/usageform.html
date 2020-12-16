@@ -15,32 +15,59 @@
 
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 
-	<form action="#" th:object="${stockUsageInventory}" th:action="@{/catalogue/saveusagerecord}"
-		method="post">
+	<form action="#" th:object="${stockUsage}"
+		th:action="@{/catalogue/saveusagerecord}" method="post">
 		<fieldset>
 			<input type="hidden" th:field="*{id}">
 		</fieldset>
 		<fieldset>
-			Customer Name <input type="text" th:field="*{stockUsage.customerName}">
-			<p th:if="${#fields.hasErrors('stockUsage.customerName')}" th:errors="*{stockUsage.customerName}"></p>
+			Customer Name <input type="text" th:field="*{customerName}">
+			<p th:if="${#fields.hasErrors('customerName')}"
+				th:errors="*{customerName}"></p>
 		</fieldset>
 		<fieldset>
-			Car Id <input type="text" th:field="*{stockUsage.carId}">
-			<p th:if="${#fields.hasErrors('stockUsage.carId')}" th:errors="*{stockUsage.carId}"></p>
+			Car Id <input type="text" th:field="*{carId}">
+			<p th:if="${#fields.hasErrors('carId')}" th:errors="*{carId}"></p>
 		</fieldset>
+
 		<fieldset>
-			Quantity <input type="number" th:field="*{quantity}">
-			<p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
+			<table>
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item, itemStat : *{usageOfTheCustomer}">
+						<td th:if="${not #lists.isEmpty(inventories)}"><select 
+							th:field=" ${stockUsage.usageOfTheCustomer[__${itemStat.index}__].productId}">
+								<option th:each="inventory:${inventories}" th:value="${inventory.id}" th:text="${inventory.product.name}"></option>
+						</select>
+							<p
+								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].productId')}"
+								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].productId}"></p>
+						</td>
+
+						<td><input type="number"
+							th:field="*{usageOfTheCustomer[__${itemStat.index}__].quantity}">
+							<p
+								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].quantity')}"
+								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].quantity}"></p>
+						</td>
+
+						<td><input type="date"
+							th:field="*{usageOfTheCustomer[__${itemStat.index}__].registrationDate}" />
+							<p
+								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].registrationDate')}"
+								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].registrationDate}"></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</fieldset>
-		<fieldset>
-			Date <input type="date" th:field="*{registrationDate}">
-			<p th:if="${#fields.hasErrors('registrationDate')}" th:errors="*{registrationDate}"></p>
-		</fieldset>
-		<fieldset>
-			Inventory <input type="text" th:field="*{inventory.product.id}">
-			<p th:if="${#fields.hasErrors('inventory.product.id')}" th:errors="*{inventory.product.id}"></p>
-		</fieldset>
-		
+
 		<fieldset>
 			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
 				type="reset" value="Reset" />
