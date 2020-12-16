@@ -120,8 +120,14 @@ public class CatalogueImplementation implements CatalogueInterface {
 	
 	@Override
 	@Transactional
-	public List<StockUsageInventory> listAllUsages() {
+	public List<StockUsageInventory> listAllStockUsageInventories() {
 		return sirepo.findAll();
+	}
+	
+	@Override
+	@Transactional
+	public List<StockUsage> listAllStockUsages() {
+		return surepo.findAll();
 	}
 	
 	@Override

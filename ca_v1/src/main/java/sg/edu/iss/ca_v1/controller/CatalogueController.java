@@ -76,8 +76,15 @@ public class CatalogueController {
 	
 	@RequestMapping(value = "/usage")
 	public String list(Model model) {
-		List<StockUsageInventory> inventories = cservice.listAllUsages();
+		List<StockUsageInventory> inventories = cservice.listAllStockUsageInventories();
 		model.addAttribute("inventories", inventories);
 		return "catalogue";
+	}
+	
+	@RequestMapping(value = "/customers")
+	public String customerList(Model model) {
+		List<StockUsage> customerList = cservice.listAllStockUsages();
+		model.addAttribute("customers", customerList);
+		return "customerlist";
 	}
 }

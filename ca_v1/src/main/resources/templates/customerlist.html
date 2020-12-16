@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="../static/css/site.css">
+<title>Customer List Page</title>
+</head>
+<body>
+
+<header th:insert="layout/layout.html :: header"></header>
+<div th:replace="layout/layout.html :: menu"></div>
+
+	<h2 th:if="${not #lists.isEmpty(customers)}">Customers List</h2>
+	<table th:if="${not #lists.isEmpty(customers)}">
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Car Id</th>
+ 			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr th:each="customer:${customers}">
+			<td th:text=${customer.Id}>Id</td>
+			<td th:text=${customer.customerName}>Username</td>
+			<td th:text=${customer.carId}>Name</td>
+			<td><a href="#"
+				th:href="@{/catalogue/edit/}+${customer.id}">Edit</a></td>
+			<td><a href="#"
+				th:href="@{/catalogue/delete/}+${customer.id}">Delete</a></td>
+		</tr>
+	</table>
+
+<div th:replace="layout/layout.html :: footer"></div>
+</body>
+<
