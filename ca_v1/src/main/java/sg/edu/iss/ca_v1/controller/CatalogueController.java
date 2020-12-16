@@ -39,9 +39,7 @@ public class CatalogueController {
 	public String addUsageForm(ModelMap model) {
 	
 		StockUsage stockUsage = new StockUsage();
-		for (int i = 0; i < 3; i++) {
-			stockUsage.addStockUsageInventory(new StockUsageInventory());
-		}
+		stockUsage.addStockUsageInventory(new StockUsageInventory());
 
 		model.addAttribute("stockUsage", stockUsage);
 		model.addAttribute("inventories", cservice.listAllInventories());
@@ -60,10 +58,14 @@ public class CatalogueController {
 		
 		List<StockUsageInventory> usageOfTheCustomer = usage.getUsageOfTheCustomer();
 		for (StockUsageInventory item : usageOfTheCustomer) {
-			Inventory invItem = cservice.findPartById(item.getProductId());
-			item.setInventory(invItem);
-			item.setStockUsage(usage);
-			cservice.saveStockUsageInventory(item);
+			
+			if (item.getInventory() == null) {
+				Inventory invItem = cservice.findPartById(item.getProductId());
+				item.setInventory(invItem);
+				item.setStockUsage(usage);
+				cservice.saveStockUsageInventory(item);
+			}
+			
 			System.out.println(item.getInventory().getProduct().getName());
 			System.out.println(item.getStockUsage().getCustomerName());
 		}
