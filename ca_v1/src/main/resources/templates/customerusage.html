@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+<body>
+
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+
+	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
+	<h1 
+		th:utext="#{customer.name}"></h1>
+	<h1 th:text="${wholeCustomerInfo.customerName}"></h1>
+
+	<h1 
+		th:utext="#{customer.carid}"></h1>
+	<h1 th:text="${wholeCustomerInfo.carId}"></h1>
+
+	<!-- Add Hyperlink -->
+	<!-- <a href="AddBooking.html" th:href="@{/booking/add}">New Booking</a> -->
+
+	<!-- <h2 th:if="${not #lists.isEmpty(bookings)}">Bookings List</h2> -->
+
+	<!-- int partId;
+	String partName;
+	String brand;
+	Double price;
+	String description;
+	String colour;
+	LocalDate registrationDate;
+	Inventory invenory; -->
+
+	<table>
+		<tr>
+			<th>PART ID</th>
+			<th>NAME</th>
+			<th>BRAND</th>
+			<th>PRICE</th>
+			<th>DESCRIPTION</th>
+			<th>COLOUR</th>
+			<th>QUANTITY</th>
+
+			<!-- <th>REGISTRATIONDATE</th> -->
+			<th>Edit Link</th>
+			<th>Delete Link</th>
+		</tr>
+		<tr th:each="obj:${bindingMachine}">
+			<td th:text="${obj.partId}">ID</td>
+			<td th:text="${obj.partName}">ID</td>
+			<td th:text="${obj.brand}">ID</td>
+			<td th:text="${obj.price}">ID</td>
+			<td th:text="${obj.description}">ID</td>
+			<td th:text="${obj.colour}">ID</td>
+			<td th:text="${obj.quantity}">ID</td>
+			<!-- <!--  <td th:text="${obj.registrationDate">ID</td> -->
+			<td><a href="EditProduct.html"
+				th:href="@{/catalogue/edit/}+${wholeCustomerInfo.carId}"
+				th:utext="#{products.page.edit}"> Edit </a></td>
+			<td><a href="DeleteProduct.html"
+				th:href="@{/catalogue/delete/}+${obj.usageRecordId}"
+				th:utext="#{products.page.delete}"> Delete </a></td> 
+
+		</tr>
+	</table>
+
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>

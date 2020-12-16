@@ -2,6 +2,7 @@ package sg.edu.iss.ca_v1.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ca_v1.model.Inventory;
 import sg.edu.iss.ca_v1.model.Product;
+import sg.edu.iss.ca_v1.model.StockUsage;
 import sg.edu.iss.ca_v1.model.StockUsageInventory;
 import sg.edu.iss.ca_v1.repo.InventoryRepository;
 import sg.edu.iss.ca_v1.repo.ProductRepository;
@@ -91,18 +93,31 @@ public class CatalogueImplementation implements CatalogueInterface {
 		return invList;
 	}
 	
+//	@Override
+//	@Transactional
+//	public void saveInventory(StockUsageInventory usage) {
+//		irepo.save(usage.getInventory());
+//	}
+//	
+//	@Override
+//	@Transactional
+//	public void saveStockUsage(StockUsageInventory usage) {
+//		surepo.save(usage.getStockUsage());
+//		
+//	}
 	@Override
 	@Transactional
-	public void saveInventory(StockUsageInventory usage) {
-		irepo.save(usage.getInventory());
+	public void saveInventory(Inventory inventory) {
+		irepo.save(inventory);
 	}
 	
 	@Override
 	@Transactional
-	public void saveStockUsage(StockUsageInventory usage) {
-		surepo.save(usage.getStockUsage());
+	public void saveStockUsage(StockUsage su) {
+		surepo.save(su);
 		
 	}
+	
 	
 	@Override
 	@Transactional
@@ -111,11 +126,27 @@ public class CatalogueImplementation implements CatalogueInterface {
 		
 	}
 	
+	
+	
 	@Override
 	@Transactional
 	public List<Inventory> listAllInventories() {
 		return irepo.findAll();
 	}
+	
+
+	@Override
+	@Transactional
+	public List<StockUsageInventory> listUsageByCarId(int id) {
+		return surepo.findByCarId(id).getUsageOfTheCustomer();
+	}
+
+	@Override
+	@Transactional
+	public Inventory findPartById(int id) {
+		return irepo.findInventoryById(id);
+	}
+	
 	
 	@Override
 	@Transactional
@@ -128,16 +159,36 @@ public class CatalogueImplementation implements CatalogueInterface {
 	public List<StockUsageInventory> listUsageByCustomer(String name) {
 		return surepo.findByCustomerName(name).getUsageOfTheCustomer();
 	}
+
+
+	@Override
+	@Transactional
+	public StockUsage findStockUsageByCustomer(String name) {
+		return surepo.findByCustomerName(name);
+	}
+	@Override
+	@Transactional
+	public StockUsage findStockUsageByCarId(int id) {
+		return surepo.findByCarId(id);
+	}
+	
 	
 	@Override
 	@Transactional
-	public List<StockUsageInventory> listUsageByCarId(int id) {
-		return surepo.findByCarId(id).getUsageOfTheCustomer();
+	public StockUsageInventory findStockUsageInventoryByPartId(int id) {
+		return sirepo.findStockUsageInventoryByProductId(id);
 	}
-
 	
+	@Override
+	@Transactional
+	public StockUsageInventory findStockUsageInventoryById(int id) {
+		return sirepo.findStockUsageInventoryById(id);
+	}
 	
-	
-	
+	@Override
+	@Transactional
+	public void deleteStockUsageInventoryById(int id) {
+		sirepo.deleteById(id);
+	}
 
 }

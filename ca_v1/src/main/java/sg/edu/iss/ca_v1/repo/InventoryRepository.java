@@ -8,5 +8,5 @@ import sg.edu.iss.ca_v1.model.Inventory;
 
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
-	 
+	public Inventory findInventoryById(int id);
 }

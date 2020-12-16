@@ -19,6 +19,8 @@ public class StockUsageInventory {
 	private StockUsage stockUsage; //connect back to which car
 	@ManyToOne (cascade = CascadeType.PERSIST)
 	private Inventory inventory; //connect back to which product
+	private int productId;
+
 	private int quantity; //quantity of the product used
 	private LocalDate registrationDate; //date the product was used on the car
 	
@@ -34,14 +36,14 @@ public class StockUsageInventory {
 		this.registrationDate = registrationDate;
 	}
 	
-//	public StockUsageInventory(StockUsage stockUsage, Inventory inventory, int quantity, LocalDate registrationDate) {
-//		super();
-//		this.stockUsage = stockUsage;
-//		this.inventory = inventory;
-//		this.quantity = quantity;
-//		this.registrationDate = registrationDate;
-//	}
-	
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
 
 	public int getId() {
 		return id;

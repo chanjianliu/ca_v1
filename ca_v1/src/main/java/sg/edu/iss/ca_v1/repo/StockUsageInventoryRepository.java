@@ -8,7 +8,9 @@ import sg.edu.iss.ca_v1.model.StockUsageInventory;
 
 @Repository
 public interface StockUsageInventoryRepository extends JpaRepository<StockUsageInventory, Integer> {
-	//stockUsageInventory.inventory.product.brand
-	//input: brand
-	//
+	public StockUsageInventory findStockUsageInventoryByProductId(int id);
+	public StockUsageInventory findStockUsageInventoryById(int id);
+	
+	
+	
 }

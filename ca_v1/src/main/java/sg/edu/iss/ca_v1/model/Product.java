@@ -16,6 +16,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
 	private String name;
 	private String brand;
 	private LocalDate dom;
@@ -58,7 +59,7 @@ public class Product {
 		this.reorderLevel = reorderLevel;
 		this.minReorderQuantity = minReorderQuantity;
 		this.supplier = supplier;
-		//this.inventory = new Inventory();
+		this.inventory = new Inventory();
 	}
 
 	public int getId() {
