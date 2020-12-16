@@ -13,8 +13,7 @@ import sg.edu.iss.ca_v1.model.Product;
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
 	
-//	@Query("Select p.id, p.minReorderQuantity,p.oriPrice,p.reorderLevel,p.inventory.quantity from Product p join Inventory i on p.inventory_id = i.Id where p.id=:pid ")
-//	ArrayList<Product> findProductBySupplierId(@Param("pid") Integer id);
+
 	
 
 }
