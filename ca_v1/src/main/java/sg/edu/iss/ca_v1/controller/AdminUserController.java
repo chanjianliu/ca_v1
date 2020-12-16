@@ -5,9 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +34,37 @@ public class AdminUserController {
 	{
 		this.adminservice=uimpl;
 	}
+// 	@RequestMapping(value="/list")
+//	public String listusers(Model model) {
+//		model.addAttribute("users", adminservice.findAll());
+//		
+//		return "users";
+//	}
  	@RequestMapping(value="/list")
 	public String listusers(Model model) {
-		model.addAttribute("users", adminservice.findAll());
+ 		
+ 		return listByPage(model, 1);
+	}
+ 	
+ 	@GetMapping("/page/{pageNumber}")
+	public String listByPage(Model model,@PathVariable("pageNumber") int currentPage) {
+ 		Page<User> page=adminservice.findAll(currentPage);
+ 		
+ 		long total=page.getTotalElements();
+ 		int totalPages=page.getTotalPages();
+ 		
+ 		List<User> list=page.getContent();
+ 		
+ 		model.addAttribute("currentPage",currentPage);
+ 		model.addAttribute("total",total);
+ 		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("list", list);
+		model.addAttribute("users", adminservice.findAll(currentPage));
 		
 		return "users";
-	}
+ 	}
+	
+	
 	@RequestMapping(value="/showuser/{id}",method = RequestMethod.GET)
 	public String showdetail(Model model,@PathVariable("id") Integer id) {
 		model.addAttribute("users",adminservice.findById(id));

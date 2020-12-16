@@ -18,8 +18,10 @@ public class Inventory{
 	private int shelfLocation;
 	private ProductState productState;
 	private int quantity;
+	
 	@OneToOne(mappedBy = "inventory")
 	private Product product;
+	
 	@OneToMany (mappedBy = "inventory")
 	private List<StockUsageInventory> stockUsageInventory;
 	

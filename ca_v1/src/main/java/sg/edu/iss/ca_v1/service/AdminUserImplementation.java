@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +31,10 @@ public class AdminUserImplementation implements AdminUserInterface {
 		urepo.save(user);
 	}
 
-	@Transactional
-	public ArrayList<User> findAll() {
-		return (ArrayList<User>) urepo.findAll();
+
+	public Page<User> findAll(int pageNumber) {
+		Pageable pageable=PageRequest.of(pageNumber - 1, 5);
+		return  urepo.findAll(pageable);
 	}
 
 	@Transactional
