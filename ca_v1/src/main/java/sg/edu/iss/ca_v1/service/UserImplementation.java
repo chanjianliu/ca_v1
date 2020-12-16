@@ -18,15 +18,11 @@ public class UserImplementation implements UserInterface {
 	UserRepository urepo;
 	
 	@Override
-	public void createUser(User user) {
+	public void saveUser(User user) {
 		urepo.save(user);
 	}
 
 	@Override
-	public void updateUser(User user) {
-		urepo.save(user);
-	}
-
 	public List<User> listAllUser() {
 		return urepo.findAll();
 	}
@@ -38,7 +34,7 @@ public class UserImplementation implements UserInterface {
 
 	@Override
 	public boolean authenticate(User user) {
-		User dbUser = urepo.findUserByUsername(user.getUsername());
+		User dbUser = urepo.findByUsername(user.getUsername());
 		if (dbUser != null 
 				&& dbUser.getUsername().equals(user.getUsername())
 				&& dbUser.getPassword().equals(user.getPassword()))
@@ -47,10 +43,12 @@ public class UserImplementation implements UserInterface {
 			return false;
 	}
 	
-	public User findUserById(int id) {
-		return urepo.findUserById(id);
+	@Override
+	public User findById(Integer id) {
+		return urepo.findById(id).get();
 	}
 	
+	@Override
 	public boolean equals(User other) {
 		return urepo.equals(other);
 	}

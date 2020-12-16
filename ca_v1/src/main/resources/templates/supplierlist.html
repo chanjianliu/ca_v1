@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet"
+	href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+<body>
+
+<header th:insert="layout/layout.html :: header"></header>
+<div th:replace="layout/layout.html :: menu"></div>
+
+<h2>Suppliers List</h2>
+	<table>
+		<tr>
+   <th>Id</th>
+   <th>Name</th>
+   <th>Address</th>
+   <th>Email</th>
+   <th>Phone</th>
+ </tr>
+ <tr th:each="supplier:${suppliers}">
+   <td th:text="${supplier.id}">Id</td> 
+   <td><a th:href="@{/supplier/detail/}+${supplier.id}" th:text="${supplier.name}">Name</a></td>
+   <td th:text="${supplier.address}">Address</td>
+   <td th:text="${supplier.email}">Email</td>
+   <td th:text="${supplier.phoneNumber}">Phone</td>
+   
+ </tr>
+	</table>
+	
+
+<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>

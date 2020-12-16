@@ -24,8 +24,8 @@ class UserListTest {
 	void contextLoads() {
 		User u1 = new User("John Appleseed", "john", "john", UserRole.ADMIN);
 		User u2 = new User("Maggie Smith", "maggie", "maggie", UserRole.MECHANIC);
-		uservice.createUser(u1);
-		uservice.createUser(u2);
+		uservice.saveUser(u1);
+		uservice.saveUser(u2);
 	}
 
 }

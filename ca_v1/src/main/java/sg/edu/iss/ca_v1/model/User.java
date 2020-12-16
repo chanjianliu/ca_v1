@@ -14,12 +14,12 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column (unique=true, nullable = false)
+	@Column (nullable = false)
 	private String name;
-	@Column (unique=true, nullable = false)
+	@Column (unique = true, nullable = false)
 	private String username;
 	@Length(min = 3, max = 15)
-	@Column (unique=true, nullable = false)
+	@Column (nullable = false)
 	private String password;
 	@Column (nullable = false)
 	private UserRole role;
