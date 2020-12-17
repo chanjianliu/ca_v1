@@ -24,7 +24,7 @@
 			<th>Delete Facility</th> -->
 		</tr>
 		<tr th:each="user:${users}">
-			<td th:text=${user.Id}>Id</td>
+			<td th:text=${user.id}>Id</td>
 			<td><a th:href="@{/user/showuser/}+${user.id}" th:text=${user.name}>Name</a></td>
 			<td th:text=${user.username}>Username</td>
 			<td th:text=${user.role}>Role</td>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import sg.edu.iss.ca_v1.model.User;
 import sg.edu.iss.ca_v1.repo.UserRepository;
@@ -52,7 +53,7 @@ public class UserController {
 		return "addUser";
 	}
 	
-	@RequestMapping("/save")
+	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String save(@ModelAttribute("user") @Valid User user, 
 			BindingResult bindingResult, Model model) {
 		
@@ -61,19 +62,18 @@ public class UserController {
 			return "addUser";
 		}
 		
-//		User dbUser = uservice.findById(user.getId());
-//		if (dbUser != null && user.getPassword().equals(dbUser.getPassword()))
-//		{
-//			System.out.println("Inside dbUser");
-//			dbUser.setName(user.getName());
-//			dbUser.setRole(user.getRole());
-//			dbUser.setUsername(user.getUsername());
-//			uservice.saveUser();
-//		}
+		User dbUser = uservice.findById(user.getId());
+		System.out.println("Inside dbUser");
+//		dbUser.setId(user.getId());
+		dbUser.setName(user.getName());
+		dbUser.setRole(user.getRole());
+		dbUser.setUsername(user.getUsername());
+//		dbUser.setPassword(user.getPassword());
+		uservice.saveUser(dbUser);
 //		else
 //		{
 //			System.out.println("new user");
-			uservice.saveUser(user);
+		
 //		}
 		return "forward:/user/showuser/"+user.getId();
 	}
@@ -87,8 +87,7 @@ public class UserController {
 	
 	@RequestMapping(value="/edit/{id}")
 	public String editForm(Model model, @PathVariable("id") Integer id) {
-		User user = urepo.findById(id).get();
-		model.addAttribute("user", user);
+		model.addAttribute("user", urepo.findById(id).get());
 		return "editUser";
 	}
 	

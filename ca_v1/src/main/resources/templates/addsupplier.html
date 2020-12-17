@@ -14,7 +14,9 @@
 	
 	<form action="#" th:object="${supplier}" th:action="@{/supplier/save}"
 		method="post">
-		
+		<fieldset>
+			<input type="hidden" th:field="*{id}">
+		</fieldset>
 		<fieldset>
 			Name <input type="text" th:field="*{name}">
 			<p th:if="${#fields.hasErrors('name')}"

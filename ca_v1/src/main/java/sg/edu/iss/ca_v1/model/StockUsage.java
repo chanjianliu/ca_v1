@@ -16,7 +16,7 @@ public class StockUsage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private int carId;
 	@Column(nullable = false)
 	private String customerName;
@@ -39,6 +39,10 @@ public class StockUsage {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void addStockUsageInventory(StockUsageInventory item) {

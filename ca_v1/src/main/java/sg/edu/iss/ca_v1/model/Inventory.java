@@ -2,6 +2,7 @@ package sg.edu.iss.ca_v1.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,12 +16,9 @@ public class Inventory{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-//	@Column(unique=true, nullable = false)
 	private int shelfLocation;
-//	@Column(nullable = false)
 	private ProductState productState;
-//	@Min(1)
-//	@Column(nullable = false)
+	@Column(nullable = false)
 	private int quantity;
 	@OneToOne(mappedBy = "inventory")
 	private Product product;
@@ -49,6 +47,10 @@ public class Inventory{
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getShelfLocation() {

@@ -16,7 +16,7 @@ public class User {
 	private int id;
 	@Column (nullable = false)
 	private String name;
-	@Column (unique = true, nullable = false)
+	@Column (nullable = false)
 	private String username;
 	@Length(min = 3, max = 15)
 	@Column (nullable = false)
@@ -66,6 +66,10 @@ public class User {
 
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getId() {

@@ -51,14 +51,15 @@ public class CatalogueController {
 		return "forward:/catalogue/showcustomer/"+customer.getId();
 	}
 	
-	///add usage
+	//add usage
 	@RequestMapping(value = "/addusageform/{id}", method=RequestMethod.GET)
 	public String addUsageForm(ModelMap model, @PathVariable ("id") Integer id) {
 	
 		StockUsage customer = cservice.findCustomerById(id);
-		customer.addStockUsageInventory(new StockUsageInventory());
+		StockUsageInventory newUsageRecord = new StockUsageInventory();
+		newUsageRecord.setStockUsage(customer);
 		
-		model.addAttribute("stockUsage", customer);
+		model.addAttribute("newUsageRecord", newUsageRecord);
 		model.addAttribute("inventories", cservice.listAllInventories());
 		
 //		Map<StockUsage, List<Inventory>> doubleObj = new HashMap<>();
@@ -67,28 +68,27 @@ public class CatalogueController {
 		return "usageform";
 	}
 	
-	@RequestMapping(value = "/saveusagerecord", method = RequestMethod.POST)
-	public String saveFixRecord(@ModelAttribute("stockUsage")@Valid StockUsage usage, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "/saveusagerecord/{id}", method = RequestMethod.POST)
+	public String saveFixRecord(@PathVariable("id") int id, @ModelAttribute("newUsageRecord")@Valid StockUsageInventory usage, BindingResult bindingResult, Model model) {
 //		cservice.saveInventory(usage);
 //		cservice.saveStockUsage(usage);
-		cservice.saveStockUsage(usage);
 		
-		List<StockUsageInventory> usageOfTheCustomer = usage.getUsageOfTheCustomer();
-		for (StockUsageInventory item : usageOfTheCustomer) {
-			
-			if (item.getInventory() == null) {
-				Inventory invItem = cservice.findPartById(item.getProductId());
-				item.setInventory(invItem);
-				item.setStockUsage(usage);
-			}
-			cservice.saveStockUsageInventory(item);
-			
-			System.out.println(item.getInventory().getProduct().getName());
-			System.out.println(item.getStockUsage().getCustomerName());
-		}
-		cservice.saveStockUsage(usage);
+		//find the customer by using the record id (which was save in database when user press add item)
+		StockUsage customer = cservice.findCustomerById(id);
+		//add record into customer record List
+		customer.addStockUsageInventory(usage);
+		//cservice.saveStockUsage(customer);
+		//find Inventory object with the inventory id retrieved above
+		Inventory item = cservice.findPartById(usage.getProductId());
+		//save the item into the record
+		usage.setInventory(item);
+		usage.setStockUsage(customer);
+		cservice.saveStockUsageInventory(usage);
 		
-		return "forward:/catalogue/showcustomer/"+usage.getId();
+//		System.out.println(usage.getInventory().getProduct().getName());
+//		System.out.println(usage.getStockUsage().getCustomerName());
+		
+		return "forward:/catalogue/showcustomer/"+customer.getId();
 	}
 	
 	@RequestMapping(value = "/showcustomer/{id}")

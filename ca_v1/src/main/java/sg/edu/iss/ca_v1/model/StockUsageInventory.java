@@ -2,6 +2,7 @@ package sg.edu.iss.ca_v1.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,18 +17,15 @@ public class StockUsageInventory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@ManyToOne 
+	@ManyToOne (cascade=CascadeType.MERGE)
 	private StockUsage stockUsage; //connect back to which car
-	@ManyToOne
+	@ManyToOne (cascade=CascadeType.MERGE)
 	private Inventory inventory; //connect back to which product
-//	@Column(nullable = false)
 	private int productId;
-//	@Min(1)
-//	@Column(nullable = false)
+	private int stockUsageId; //remember getter setter
 	private int quantity; //quantity of the product used
 //	@FutureOrPresent
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-//	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate registrationDate; //date the product was used on the car
 	
 	public StockUsageInventory() {
@@ -44,6 +42,10 @@ public class StockUsageInventory {
 		return id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public StockUsage getStockUsage() {
 		return stockUsage;
 	}

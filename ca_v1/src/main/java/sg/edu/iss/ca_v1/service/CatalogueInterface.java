@@ -25,6 +25,7 @@ public interface CatalogueInterface {
 	public List<StockUsageInventory> listUsageByCustomer(String name);
 	public List<StockUsageInventory> listUsageByCarId(int id);
 	
+	public StockUsageInventory findUsageById(int id);
 	public List<StockUsage> listAllStockUsages();
 	public StockUsage findCustomerById(int id);
 }

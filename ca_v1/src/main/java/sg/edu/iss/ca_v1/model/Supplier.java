@@ -18,7 +18,6 @@ public class Supplier {
 	private int id;
 	private String name;
 	private String address;
-//	@Column(unique=true)
 	private String email;
 	private String phoneNumber;
 	@OneToMany (mappedBy = "supplier")
@@ -48,6 +47,10 @@ public class Supplier {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
