@@ -19,10 +19,12 @@ public interface CatalogueInterface {
 	public void saveStockUsage(StockUsage su);
 	public void saveStockUsageInventory(StockUsageInventory si);
 
+	public void deleteStockUsageInventory(StockUsageInventory si);
+	
 	public List<Inventory> listAllInventories();
 	
 	public List<StockUsageInventory> listAllStockUsageInventories();
-	public List<StockUsageInventory> listUsageByCustomer(String name);
+	public List<StockUsageInventory> listUsageByCustomerId(int id);
 	public List<StockUsageInventory> listUsageByCarId(int id);
 	
 	public StockUsageInventory findUsageById(int id);

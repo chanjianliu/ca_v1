@@ -19,10 +19,10 @@
 
 	<form action="#" th:object="${newUsageRecord}"
 		th:action="@{/catalogue/saveusagerecord/}+${newUsageRecord.stockUsage.id}" method="post">
-			<fieldset><input type="hidden" th:value="*{id}"></fieldset>
-			<fieldset>Id: <input type="hidden" th:value="*{stockUsage.id}"><span th:text="*{stockUsage.id}">Id</span> </fieldset>
-			<fieldset>Customer Name: <input type="hidden" th:value="*{stockUsage.customerName}"><span th:text="*{stockUsage.customerName}">Customer Name</span> </fieldset>
-			<fieldset>Car Id: <input type="hidden" th:value="*{stockUsage.carId}"><span th:text="*{stockUsage.carId}">Customer Name</span></fieldset>
+			<fieldset><input type="hidden" th:field="*{id}" th:value="*{id}"></fieldset>
+			<fieldset>Id: <input type="hidden" th:field="*{stockUsage.id}" th:value="*{stockUsage.id}"><span th:text="*{stockUsage.id}">Id</span> </fieldset>
+			<fieldset>Customer Name: <input type="hidden" th:field="*{stockUsage.customerName}" th:value="*{stockUsage.customerName}"><span th:text="*{stockUsage.customerName}">Customer Name</span> </fieldset>
+			<fieldset>Car Id: <input type="hidden" th:field="*{stockUsage.carId}" th:value="*{stockUsage.carId}"><span th:text="*{stockUsage.carId}">Customer Name</span></fieldset>
 		<br/>
 		
 		<fieldset>

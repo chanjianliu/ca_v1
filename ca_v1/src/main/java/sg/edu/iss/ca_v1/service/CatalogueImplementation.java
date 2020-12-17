@@ -32,6 +32,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	StockUsageInventoryRepository sirepo;
 	
 	@Override
+	@Transactional
 	public List<Inventory> findPartsByName(String name) {
 		List<Product> pros = prepo.findByName(name);
 		List<Inventory> invList = new ArrayList<>();
@@ -44,6 +45,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	}
 	
 	@Override
+	@Transactional
 	public List<Inventory> findPartsByBrand(String name) {
 		List<Product> pros = prepo.findByBrand(name);
 		List<Inventory> invList = new ArrayList<>();
@@ -55,6 +57,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	}
 	
 	@Override
+	@Transactional
 	public List<Inventory> findPartsByColor(String color) {
 		List<Product> pros = prepo.findByColour(color);
 		List<Inventory> invList = new ArrayList<>();
@@ -66,6 +69,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	}
 	
 	@Override
+	@Transactional
 	public List<Inventory> findPartsBySupplier(String supplierName) {
 		List<Product> pros = prepo.findBySupplier(supplierName);
 		List<Inventory> invList = new ArrayList<>();
@@ -77,6 +81,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	}
 	
 	@Override
+	@Transactional
 	public List<Inventory> FilteringPartByDescription(String keyword) {
 		List<Product> pros = prepo.findByDescriptionContaining(keyword);
 		List<Inventory> invList = new ArrayList<>();
@@ -88,6 +93,7 @@ public class CatalogueImplementation implements CatalogueInterface {
 	}
 	
 	@Override
+	@Transactional
 	public Inventory findPartById(int id) {
 		return irepo.findInventoryById(id);
 	}
@@ -114,6 +120,12 @@ public class CatalogueImplementation implements CatalogueInterface {
 	
 	@Override
 	@Transactional
+	public void deleteStockUsageInventory(StockUsageInventory si) {
+		sirepo.delete(si);
+	}
+	
+	@Override
+	@Transactional
 	public List<Inventory> listAllInventories() {
 		return irepo.findAll();
 	}
@@ -132,8 +144,8 @@ public class CatalogueImplementation implements CatalogueInterface {
 	
 	@Override
 	@Transactional
-	public List<StockUsageInventory> listUsageByCustomer(String name) {
-		return surepo.findByCustomerName(name).getUsageOfTheCustomer();
+	public List<StockUsageInventory> listUsageByCustomerId(int id) {
+		return surepo.findById(id).get().getUsageOfTheCustomer();
 	}
 	
 	@Override
@@ -143,11 +155,13 @@ public class CatalogueImplementation implements CatalogueInterface {
 	}
 
 	@Override
+	@Transactional
 	public StockUsage findCustomerById(int id) {
 		return surepo.findById(id).get();
 	}
 
 	@Override
+	@Transactional
 	public StockUsageInventory findUsageById(int id) {
 		return sirepo.findById(id).get();
 	}

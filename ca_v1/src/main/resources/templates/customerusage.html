@@ -15,17 +15,19 @@
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 	<table>
 		<tr>
-			<td th:utext="#{customer.id}"></td>
-			<td th:text="${customer.id}"></td>
+			<td> Customer Id<span th:text="${customer.id}"> </span></td>
 		</tr>
 		<tr>
-			<td th:utext="#{customer.name}"></td>
-			<td th:text="${customer.customerName}"></td>
+			<td> Customer Name<span th:text="${customer.customerName}"> </span></td>
 		</tr>
 		<tr>
-			<td th:utext="#{customer.carid}"></td>
-			<td th:text="${customer.carId}"></td>
+			<td> Customer CarId<span th:text="${customer.carId}"> </span></td>
 		</tr>
+			<tr>
+			<td><a th:href="@{/editcustomer/}+${customer.id}">
+				<button>Edit Customer</button></a>
+			</td>
+			</tr>
 	</table>
 	<!-- Add Hyperlink -->
 	<!-- <a href="AddBooking.html" th:href="@{/booking/add}">New Booking</a> -->
@@ -43,7 +45,7 @@
 	<br />
 	<table>
 		<tr>
-			<th colspan=7><h5 align="center">History</h5></th>
+			<th colspan=9><h5 align="center">History</h5></th>
 		</tr>
 		<tr>
 			<th>Part Id</th>
@@ -53,20 +55,22 @@
 			<th>Description</th>
 			<th>Colour</th>
 			<th>Quantity</th>
-			<!-- <th>REGISTRATIONDATE</th> -->
+			<th>Registration Date</th>
+			<th>Delete</th>
 		</tr>
 		<tr th:each="obj:${usagesOfTheCustomer}">
 			<td th:text="${obj.productId}">Product Id</td>
 			<td th:text="${obj.inventory.product.name}">Product Name</td>
-			<td th:text="${obj.inventory.product.brand}">ID</td>
-			<td th:text="${obj.inventory.product.retailPrice}">ID</td>
-			<td th:text="${obj.inventory.product.description}">ID</td>
-			<td th:text="${obj.inventory.product.colour}">ID</td>
-			<td th:text="${obj.quantity}">ID</td>
-			<!-- <!--  <td th:text="${obj.registrationDate">ID</td> -->
+			<td th:text="${obj.inventory.product.brand}">Brand</td>
+			<td th:text="${obj.inventory.product.retailPrice}">Retail Price</td>
+			<td th:text="${obj.inventory.product.description}">Description</td>
+			<td th:text="${obj.inventory.product.colour}">Colour</td>
+			<td th:text="${obj.quantity}">Quantity</td>
+			<td th:text="${#temporals.format(obj.registrationDate, 'dd-MMM-yyyy')}">Date</td>
+			<td><a th:href="@{/catalogue/delete/}+${obj.id}"><button> Delete </button></a></td>
 		</tr>
 		<tr>
-			<td colspan=7>
+			<td colspan=9>
 			<a th:href="@{/catalogue/customers/}">
 				<button>Back to Customer List</button>
 			</a>

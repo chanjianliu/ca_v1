@@ -16,23 +16,20 @@
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 
 	<form action="#" th:object="${stockUsage}"
-		th:action="@{/catalogue/saveusagerecord}" method="post">
+		th:action="@{/catalogue/updateusagerecord}" method="post">
 
 		<fieldset>
-			<div>
-				Id:
-				<p th:text="*{id}">Id</p>
-			</div>
+			Id: <input type="hidden" th:field="*{id}" th:value="*{id}">
+			<p th:text="*{id}">Id</p>
+		</fieldset>
+		<fieldset>
+			Customer Name: <input type="hidden" th:field="*{customerName}"
+				th:value="*{customerName}">
+			<p th:text="*{customerName}">Customer Name</p>
 		</fieldset>
 		<fieldset>
 			<div>
-				Customer Name:
-				<p th:text="*{customerName}">Customer Name</p>
-			</div>
-		</fieldset>
-		<fieldset>
-			<div>
-				Car Id:
+				Car Id:<input type="hidden" th:field="*{carId}" th:value="*{carId}">
 				<p th:text="*{carId}">Customer Name</p>
 			</div>
 		</fieldset>
@@ -49,8 +46,11 @@
 				</thead>
 				<tbody>
 					<tr th:each="item, itemStat : *{usageOfTheCustomer}">
+
 						<td th:if="${not #lists.isEmpty(usageOfTheCustomer)}"><input
 							type="hidden"
+							th:field="*{usageOfTheCustomer[__${itemStat.index}__].id}"
+							th:value="${item.id}"> <input type="hidden"
 							th:field=" *{usageOfTheCustomer[__${itemStat.index}__].productId}"
 							th:value="${item.productId}">
 							<p th:text="${item.inventory.product.name}"></p>
@@ -76,27 +76,22 @@
 				</tbody>
 			</table>
 		</fieldset>
-
-		<table>
-			<tr>
-				<td><a th:href="@{/catalogue/showcustomer/}+${stockUsage.id}">
-						<button>Back to Customer Detail</button>
-				</a> <a th:href="@{/catalogue/addusageform/}+${stockUsage.id}">
-						<button>Add New Part</button>
-				</a></td>
-			</tr>
-		</table>
-		
-		
-		<!-- 				<td><a href="DeleteProduct.html"
-				th:href="@{/catalogue/delete/}+${obj.productId}"
-				th:utext="#{products.page.delete}"> Delete </a></td> -->
 		<fieldset>
 			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
 				type="reset" value="Reset" />
 		</fieldset>
 	</form>
 
+
+	<table>
+		<tr>
+			<td><a th:href="@{/catalogue/showcustomer/}+${stockUsage.id}">
+					<button>Back to Customer Detail</button>
+			</a> <a th:href="@{/catalogue/addusageform/}+${stockUsage.id}">
+					<button>Add New Part</button>
+			</a></td>
+		</tr>
+	</table>
 	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

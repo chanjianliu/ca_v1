@@ -16,7 +16,7 @@ public class User {
 	private int id;
 	@Column (nullable = false)
 	private String name;
-	@Column (nullable = false)
+	@Column (unique=true, nullable = false)
 	private String username;
 	@Length(min = 3, max = 15)
 	@Column (nullable = false)
