@@ -22,7 +22,7 @@ public class StockUsageInventory {
 	@ManyToOne (cascade=CascadeType.MERGE)
 	private Inventory inventory; //connect back to which product
 	private int productId;
-	private int stockUsageId; //remember getter setter
+	private int customerId; 
 	private int quantity; //quantity of the product used
 //	@FutureOrPresent
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -68,6 +68,14 @@ public class StockUsageInventory {
 
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public int getQuantity() {
