@@ -1,5 +1,6 @@
 package sg.edu.iss.ca_v1.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,10 +17,33 @@ public class Supplier {
 	private int id;
 	private String name;
 	private String address;
+//	@Column(unique=true)
 	private String email;
 	private String phoneNumber;
 	@OneToMany (mappedBy = "supplier")
 	private List<Product> productList;
+
+	public Supplier() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Supplier(String name, String address, String email, String phoneNumber, List<Product> productList) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.productList = productList;
+	}
+	public Supplier(String name, String address, String email, String phoneNumber) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.productList = new ArrayList<Product>();
+	}
 
 	public int getId() {
 		return id;
@@ -57,13 +81,6 @@ public class Supplier {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public List<Product> getProduct() {
-		return productList;
-	}
-
-	public void setProduct(List<Product> productList) {
-		this.productList = productList;
-	}
 
 	public List<Product> getProductList() {
 		return productList;
