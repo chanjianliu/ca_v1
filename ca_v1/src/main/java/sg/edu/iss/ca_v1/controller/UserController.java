@@ -1,5 +1,6 @@
 package sg.edu.iss.ca_v1.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +96,44 @@ public class UserController {
 	public String deleteUser(Model model, @PathVariable("id") Integer id) {
 		uservice.deleteUser(urepo.findById(id).get());
 		return "forward:/user/list";
+	}
+	
+//All the login and logout stuff
+	@RequestMapping(path = "/login")
+	public String login(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		return "login";
+	}
+	
+	@RequestMapping(path = "/authenticate")
+	public String authenticate(@ModelAttribute("user") User user, Model model, HttpSession session) {
+		if(uservice.authenticate(user))
+		{
+			User u = uservice.findByName(user.getUsername());
+			session.setAttribute("usession", u);
+			model.addAttribute("user",u);
+			return "landing";
+		}
+		else
+			return "index";
+	}
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "forward:/user/login";
+	}
+	
+	@RequestMapping(path = "/landing")
+	public String backToLanding(@ModelAttribute("user") User user, Model model, HttpSession session) {
+		if(session.getId() != null || session.getId() != "") 
+		{
+			User u = uservice.findByName(user.getUsername());
+			model.addAttribute("user", u);
+			return "landing";
+		}
+		else
+			return "index";
 	}
 }

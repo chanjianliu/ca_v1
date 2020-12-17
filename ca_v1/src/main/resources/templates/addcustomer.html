@@ -15,31 +15,20 @@
 
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 
-	<form action="#" th:object="${user}" th:action="@{/user/save}"
-		method="post">
+	<form action="#" th:object="${stockUsage}"
+		th:action="@{/catalogue/savecustomer}" method="post">
 		<fieldset>
 			<input type="hidden" th:field="*{id}">
 		</fieldset>
 		<fieldset>
-			Full Name <input type="text" th:field="*{name}">
-			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+			Customer Name <input type="text" th:field="*{customerName}">
+			<p th:if="${#fields.hasErrors('customerName')}"
+				th:errors="*{customerName}"></p>
 		</fieldset>
 		<fieldset>
-			Username <input type="text" th:field="*{username}">
-			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+			Car Id <input type="text" th:field="*{carId}">
+			<p th:if="${#fields.hasErrors('carId')}" th:errors="*{carId}"></p>
 		</fieldset>
-		<fieldset>
-			<input type="hidden" th:field="*{password}">
-		</fieldset>
-		<fieldset>
-			Role 
-			<select th:field="*{role}">
-				<option value="ADMIN">Admin</option>
-				<option value="MECHANIC">Mechanic</option>
-			</select>
-			<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
-		</fieldset>
-
 		<fieldset>
 			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
 				type="reset" value="Reset" />

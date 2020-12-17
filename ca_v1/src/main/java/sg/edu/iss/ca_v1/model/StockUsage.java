@@ -3,6 +3,7 @@ package sg.edu.iss.ca_v1.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +16,9 @@ public class StockUsage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-//	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false)
 	private int carId;
-//	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String customerName;
 	@OneToMany(mappedBy = "stockUsage")
 	private List<StockUsageInventory> usageOfTheCustomer = new ArrayList<StockUsageInventory>();

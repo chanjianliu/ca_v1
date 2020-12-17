@@ -5,12 +5,12 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="../static/css/site.css">
-<title>Index Page</title>
+<title>New User Page</title>
 </head>
 <body>
 
-	<header th:insert="layout/layout.html :: header"></header>
-	<div th:replace="layout/layout.html :: menu"></div>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
 	<h2>New User</h2>
 
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
@@ -29,7 +29,8 @@
 			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 		</fieldset>
 		<fieldset>
-			<input type="hidden" th:field="*{password}">
+			Password <input type="password" th:field="*{password}">
+			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 		</fieldset>
 		<fieldset>
 			Role 
@@ -46,6 +47,6 @@
 		</fieldset>
 	</form>
 
-	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

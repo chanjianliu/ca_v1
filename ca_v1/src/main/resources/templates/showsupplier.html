@@ -7,8 +7,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
-	<header th:insert="layout/layout.html :: header"></header>
-	<div th:replace="layout/layout.html :: menu"></div>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
 
 	<h2>User Detail</h2>
 	<table th:if="${not #lists.isEmpty(supplier)}">
@@ -40,6 +40,6 @@
 			</td>
 		</tr>
 	</table>
-	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

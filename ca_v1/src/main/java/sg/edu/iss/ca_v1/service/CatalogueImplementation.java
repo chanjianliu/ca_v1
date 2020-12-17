@@ -142,9 +142,8 @@ public class CatalogueImplementation implements CatalogueInterface {
 		return surepo.findByCarId(id).getUsageOfTheCustomer();
 	}
 
-	
-	
-	
-	
+	public StockUsage findCustomerById(int id) {
+		return surepo.findById(id).get();
+	}
 
 }

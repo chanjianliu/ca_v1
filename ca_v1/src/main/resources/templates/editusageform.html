@@ -4,6 +4,7 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
 <title>Index Page</title>
 </head>
 <body>
@@ -16,27 +17,43 @@
 
 	<form action="#" th:object="${stockUsage}"
 		th:action="@{/catalogue/saveusagerecord}" method="post">
-		
-			<fieldset><input type="hidden" th:value="*{id}">Id: <span th:text="*{id}">Id</span> </fieldset>
-			<fieldset><input type="hidden" th:value="*{customerName}">Customer Name: <span th:text="*{customerName}">Customer Name</span> </fieldset>
-			<fieldset><input type="hidden" th:value="*{carId}">Car Id: <span th:text="*{carId}">Customer Name</span></fieldset>
-		<br/>
-		
+
+		<fieldset>
+			<div>
+				Id:
+				<p th:text="*{id}">Id</p>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div>
+				Customer Name:
+				<p th:text="*{customerName}">Customer Name</p>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div>
+				Car Id:
+				<p th:text="*{carId}">Customer Name</p>
+			</div>
+		</fieldset>
+		<br />
+
 		<fieldset>
 			<table>
-				<theader>
+				<thead>
 					<tr>
 						<th>Item</th>
 						<th>Quantity</th>
 						<th>Date</th>
 					</tr>
-				</theader>
+				</thead>
 				<tbody>
 					<tr th:each="item, itemStat : *{usageOfTheCustomer}">
-						<td th:if="${not #lists.isEmpty(inventories)}"><select 
-							th:field=" ${stockUsage.usageOfTheCustomer[__${itemStat.index}__].productId}">
-								<option th:each="inventory:${inventories}" th:value="${inventory.id}" th:text="${inventory.product.name}"></option>
-						</select>
+						<td th:if="${not #lists.isEmpty(usageOfTheCustomer)}"><input
+							type="hidden"
+							th:field=" *{usageOfTheCustomer[__${itemStat.index}__].productId}"
+							th:value="${item.productId}">
+							<p th:text="${item.inventory.product.name}"></p>
 							<p
 								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].productId')}"
 								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].productId}"></p>
@@ -60,6 +77,20 @@
 			</table>
 		</fieldset>
 
+		<table>
+			<tr>
+				<td><a th:href="@{/catalogue/showcustomer/}+${stockUsage.id}">
+						<button>Back to Customer Detail</button>
+				</a> <a th:href="@{/catalogue/addusageform/}+${stockUsage.id}">
+						<button>Add New Part</button>
+				</a></td>
+			</tr>
+		</table>
+		
+		
+		<!-- 				<td><a href="DeleteProduct.html"
+				th:href="@{/catalogue/delete/}+${obj.productId}"
+				th:utext="#{products.page.delete}"> Delete </a></td> -->
 		<fieldset>
 			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
 				type="reset" value="Reset" />

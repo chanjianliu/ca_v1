@@ -34,7 +34,7 @@ public class UserImplementation implements UserInterface {
 
 	@Override
 	public boolean authenticate(User user) {
-		User dbUser = urepo.findByUsername(user.getUsername());
+		User dbUser = urepo.findUserByUsername(user.getUsername());
 		if (dbUser != null 
 				&& dbUser.getUsername().equals(user.getUsername())
 				&& dbUser.getPassword().equals(user.getPassword()))
@@ -51,5 +51,9 @@ public class UserImplementation implements UserInterface {
 	@Override
 	public boolean equals(User other) {
 		return urepo.equals(other);
+	}
+	
+	public User findByName(String name) {
+		return urepo.findUserByUsername(name);
 	}
 }

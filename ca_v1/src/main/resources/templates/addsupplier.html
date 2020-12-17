@@ -8,8 +8,10 @@
 </head>
 <body>
 	
-
-	<h1>Supplier Form</h1>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+	<h2>New Supplier</h2>
+	
 	<form action="#" th:object="${supplier}" th:action="@{/supplier/save}"
 		method="post">
 		
@@ -22,7 +24,6 @@
 			Address <input type="text" th:field="*{address}">
 			<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
 		</fieldset>
-`
 		<fieldset>
 			Email <input type="text" th:field="*{email}">
 			<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
@@ -39,6 +40,6 @@
 
 	</form>
 	<br />
-	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

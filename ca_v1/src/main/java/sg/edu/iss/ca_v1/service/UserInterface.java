@@ -11,4 +11,5 @@ public interface UserInterface {
 	public boolean authenticate (User user); 
 	public User findById(Integer id);
 	public boolean equals(User other);
+	public User findByName(String name);
 }
