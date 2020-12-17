@@ -3,6 +3,7 @@ package sg.edu.iss.ca_v1.model;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,25 +17,32 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	@Column(nullable = false)
 	private String name;
 	private String brand;
 	private LocalDate dom;
 	private String colour;
+//	@Min(1)
+	@Column(nullable = false)
 	private double oriPrice; 
+//	@Min(1)
 	private double wholesalePrice; //lower price 
+//	@Min(1)
 	private double retailPrice; //highest price
+//	@Min(1)
 	private double partnerPrice; //2nd highest
 	private String description;
 	private String dimension;
 	private String category;
+//	@Min(1)
+//	@Column(nullable = false)
 	private int reorderLevel; // reorder level
+//	@Min(1)
+//	@Column(nullable = false)
 	private int minReorderQuantity; // minimum reorder quantity
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne (cascade=CascadeType.PERSIST)
 	private Supplier supplier;
-	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne (cascade=CascadeType.PERSIST)
 	private Inventory inventory;
 	
 	public Product() {
@@ -64,6 +72,10 @@ public class Product {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

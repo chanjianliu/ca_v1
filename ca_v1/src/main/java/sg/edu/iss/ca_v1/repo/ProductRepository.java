@@ -4,12 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import sg.edu.iss.ca_v1.model.Product;
 
-
-@Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	public List<Product> findByName(String name);
 	public List<Product> findByColour(String color);
@@ -18,5 +15,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query("select p from Product p where p.supplier.name = :SupplierName")
 	public List<Product> findBySupplier(String SupplierName);
-	
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet"
+	href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+<body>
+
+<header th:insert="layout/loglayout.html :: header"></header>
+<div th:replace="layout/loglayout.html :: menu"></div>
+
+<h2>Suppliers List</h2>
+	<table>
+		<tr>
+   <th>Id</th>
+   <th>Name</th>
+   <th>Address</th>
+   <th>Email</th>
+   <th>Phone</th>
+ </tr>
+ <tr th:each="supplier:${suppliers}">
+   <td th:text="${supplier.id}">Id</td> 
+   <td><a th:href="@{/supplier/detail/}+${supplier.id}" th:text="${supplier.name}">Name</a></td>
+   <td th:text="${supplier.address}">Address</td>
+   <td th:text="${supplier.email}">Email</td>
+   <td th:text="${supplier.phoneNumber}">Phone</td>
+ </tr>
+ <tr>
+	<td colspan=3></td>
+	<td colspan=2>
+		<a th:href="@{/user/landing}"><button>Return to Main</button></a>
+		<a th:href="@{/supplier/add}"><button>Add New Supplier</button></a>
+	</td>
+</tr>
+	</table>
+	
+
+<div th:replace="layout/loglayout.html :: footer"></div>
+</body>
+</html>

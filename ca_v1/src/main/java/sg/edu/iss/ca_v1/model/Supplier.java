@@ -3,6 +3,7 @@ package sg.edu.iss.ca_v1.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Supplier {
 	private String phoneNumber;
 	@OneToMany (mappedBy = "supplier")
 	private List<Product> productList;
-	
+
 	public Supplier() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,6 +47,10 @@ public class Supplier {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

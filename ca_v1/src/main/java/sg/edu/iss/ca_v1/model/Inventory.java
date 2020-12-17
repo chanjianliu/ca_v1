@@ -2,6 +2,7 @@ package sg.edu.iss.ca_v1.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Inventory{
 	private int id;
 	private int shelfLocation;
 	private ProductState productState;
+	@Column(nullable = false)
 	private int quantity;
 	@OneToOne(mappedBy = "inventory")
 	private Product product;
@@ -45,6 +47,10 @@ public class Inventory{
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getShelfLocation() {

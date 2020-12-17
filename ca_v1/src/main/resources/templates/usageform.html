@@ -4,64 +4,59 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="../static/css/site.css">
 <title>Index Page</title>
 </head>
+
+
 <body>
 
-	<header th:insert="layout/layout.html :: header"></header>
-	<div th:replace="layout/layout.html :: menu"></div>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
 	<h2>New User</h2>
 
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 
-	<form action="#" th:object="${stockUsage}"
-		th:action="@{/catalogue/saveusagerecord}" method="post">
-		<fieldset>
-			<input type="hidden" th:field="*{id}">
-		</fieldset>
-		<fieldset>
-			Customer Name <input type="text" th:field="*{customerName}">
-			<p th:if="${#fields.hasErrors('customerName')}"
-				th:errors="*{customerName}"></p>
-		</fieldset>
-		<fieldset>
-			Car Id <input type="text" th:field="*{carId}">
-			<p th:if="${#fields.hasErrors('carId')}" th:errors="*{carId}"></p>
-		</fieldset>
-
+	<form action="#" th:object="${newUsageRecord}"
+		th:action="@{/catalogue/saveusagerecord/}+${newUsageRecord.stockUsage.id}" method="post">
+			<fieldset><input type="hidden" th:value="*{id}"></fieldset>
+			<fieldset>Id: <input type="hidden" th:value="*{stockUsage.id}"><span th:text="*{stockUsage.id}">Id</span> </fieldset>
+			<fieldset>Customer Name: <input type="hidden" th:value="*{stockUsage.customerName}"><span th:text="*{stockUsage.customerName}">Customer Name</span> </fieldset>
+			<fieldset>Car Id: <input type="hidden" th:value="*{stockUsage.carId}"><span th:text="*{stockUsage.carId}">Customer Name</span></fieldset>
+		<br/>
+		
 		<fieldset>
 			<table>
-				<thead>
+				<theader>
 					<tr>
 						<th>Item</th>
 						<th>Quantity</th>
 						<th>Date</th>
 					</tr>
-				</thead>
+				</theader>
 				<tbody>
-					<tr th:each="item, itemStat : *{usageOfTheCustomer}">
+					<tr>
 						<td th:if="${not #lists.isEmpty(inventories)}"><select 
-							th:field=" ${stockUsage.usageOfTheCustomer[__${itemStat.index}__].productId}">
+							th:field=" ${newUsageRecord.productId}">
 								<option th:each="inventory:${inventories}" th:value="${inventory.id}" th:text="${inventory.product.name}"></option>
 						</select>
 							<p
-								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].productId')}"
-								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].productId}"></p>
+								th:if="${#fields.hasErrors('productId')}"
+								th:errors="${newUsageRecord.productId}"></p>
 						</td>
 
 						<td><input type="number"
-							th:field="*{usageOfTheCustomer[__${itemStat.index}__].quantity}">
+							th:field="${newUsageRecord.quantity}">
 							<p
-								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].quantity')}"
-								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].quantity}"></p>
+								th:if="${#fields.hasErrors('quantity')}"
+								th:errors="${newUsageRecord.quantity}"></p>
 						</td>
 
 						<td><input type="date"
-							th:field="*{usageOfTheCustomer[__${itemStat.index}__].registrationDate}" />
+							th:field="${newUsageRecord.registrationDate}" />
 							<p
-								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].registrationDate')}"
-								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].registrationDate}"></p>
+								th:if="${#fields.hasErrors('registrationDate')}"
+								th:errors="${newUsageRecord.registrationDate}"></p>
 						</td>
 					</tr>
 				</tbody>
@@ -74,6 +69,6 @@
 		</fieldset>
 	</form>
 
-	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

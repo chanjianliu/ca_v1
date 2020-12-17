@@ -12,13 +12,13 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class StockUsage {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-//	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private int carId;
-//	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String customerName;
 	@OneToMany(mappedBy = "stockUsage")
 	private List<StockUsageInventory> usageOfTheCustomer = new ArrayList<StockUsageInventory>();
@@ -39,6 +39,10 @@ public class StockUsage {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void addStockUsageInventory(StockUsageInventory item) {
@@ -68,5 +72,4 @@ public class StockUsage {
 	public void setUsageOfTheCustomer(List<StockUsageInventory> usageOfTheCustomer) {
 		this.usageOfTheCustomer = usageOfTheCustomer;
 	}
-
 }

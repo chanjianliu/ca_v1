@@ -9,18 +9,24 @@
 </head>
 <body>
 
-	<header th:insert="layout/layout.html :: header"></header>
-	<div th:replace="layout/layout.html :: menu"></div>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
 
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
-	<h1 
-		th:utext="#{customer.name}"></h1>
-	<h1 th:text="${wholeCustomerInfo.customerName}"></h1>
-
-	<h1 
-		th:utext="#{customer.carid}"></h1>
-	<h1 th:text="${wholeCustomerInfo.carId}"></h1>
-
+	<table>
+		<tr>
+			<td th:utext="#{customer.id}"></td>
+			<td th:text="${customer.id}"></td>
+		</tr>
+		<tr>
+			<td th:utext="#{customer.name}"></td>
+			<td th:text="${customer.customerName}"></td>
+		</tr>
+		<tr>
+			<td th:utext="#{customer.carid}"></td>
+			<td th:text="${customer.carId}"></td>
+		</tr>
+	</table>
 	<!-- Add Hyperlink -->
 	<!-- <a href="AddBooking.html" th:href="@{/booking/add}">New Booking</a> -->
 
@@ -34,40 +40,46 @@
 	String colour;
 	LocalDate registrationDate;
 	Inventory invenory; -->
-
+	<br />
 	<table>
 		<tr>
-			<th>PART ID</th>
-			<th>NAME</th>
-			<th>BRAND</th>
-			<th>PRICE</th>
-			<th>DESCRIPTION</th>
-			<th>COLOUR</th>
-			<th>QUANTITY</th>
-
-			<!-- <th>REGISTRATIONDATE</th> -->
-			<th>Edit Link</th>
-			<th>Delete Link</th>
+			<th colspan=7><h5 align="center">History</h5></th>
 		</tr>
-		<tr th:each="obj:${bindingMachine}">
-			<td th:text="${obj.partId}">ID</td>
-			<td th:text="${obj.partName}">ID</td>
-			<td th:text="${obj.brand}">ID</td>
-			<td th:text="${obj.price}">ID</td>
-			<td th:text="${obj.description}">ID</td>
-			<td th:text="${obj.colour}">ID</td>
+		<tr>
+			<th>Part Id</th>
+			<th>Name</th>
+			<th>Brand</th>
+			<th>Price</th>
+			<th>Description</th>
+			<th>Colour</th>
+			<th>Quantity</th>
+			<!-- <th>REGISTRATIONDATE</th> -->
+		</tr>
+		<tr th:each="obj:${usagesOfTheCustomer}">
+			<td th:text="${obj.productId}">Product Id</td>
+			<td th:text="${obj.inventory.product.name}">Product Name</td>
+			<td th:text="${obj.inventory.product.brand}">ID</td>
+			<td th:text="${obj.inventory.product.retailPrice}">ID</td>
+			<td th:text="${obj.inventory.product.description}">ID</td>
+			<td th:text="${obj.inventory.product.colour}">ID</td>
 			<td th:text="${obj.quantity}">ID</td>
 			<!-- <!--  <td th:text="${obj.registrationDate">ID</td> -->
-			<td><a href="EditProduct.html"
-				th:href="@{/catalogue/edit/}+${wholeCustomerInfo.carId}"
-				th:utext="#{products.page.edit}"> Edit </a></td>
-			<td><a href="DeleteProduct.html"
-				th:href="@{/catalogue/delete/}+${obj.usageRecordId}"
-				th:utext="#{products.page.delete}"> Delete </a></td> 
-
+		</tr>
+		<tr>
+			<td colspan=7>
+			<a th:href="@{/catalogue/customers/}">
+				<button>Back to Customer List</button>
+			</a>
+			<a th:href="@{/catalogue/addusageform/}+${customer.id}">
+				<button>Add New Part</button>
+			</a>
+			<a th:href="@{/catalogue/edit/}+${customer.id}">
+				<button>Edit History</button>
+			</a>
+			</td>
 		</tr>
 	</table>
 
-	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>
