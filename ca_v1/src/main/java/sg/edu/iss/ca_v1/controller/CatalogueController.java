@@ -44,14 +44,14 @@ public class CatalogueController {
 		return "addcustomer";
 	}
 
-//	//updating a new customer (StockUsage)
-//	@RequestMapping(value = "/editcustomer/{id}")
-//	public String updateCustomerForm(@PathVariable("id") Integer id, ModelMap model) {
-//
-//		model.addAttribute("stockUsage", cservice.findCustomerById(id));
-//		return "addcustomer";
-//	}
-//	
+	//updating a new customer (StockUsage)
+	@RequestMapping(value = "/editcustomer/{id}")
+	public String updateCustomerForm(@PathVariable("id") Integer id, ModelMap model) {
+
+		model.addAttribute("stockUsage", cservice.findCustomerById(id));
+		return "addcustomer";
+	}
+	
 	//saving/updating customer info (StockUsage)
 	@RequestMapping(value = "/savecustomer")
 	public String saveCustomerForm(@ModelAttribute("stockUsage") StockUsage customer, ModelMap model) {
@@ -89,6 +89,10 @@ public class CatalogueController {
 		// save the item into the record
 		usage.setInventory(item);
 		usage.setStockUsage(customer);
+		
+		//deducting quantity from inventory
+		item.setQuantity(item.getQuantity() - usage.getQuantity());
+		
 		cservice.saveStockUsageInventory(usage);
 
 		return "forward:/catalogue/showcustomer/" + customer.getId();
@@ -101,9 +105,13 @@ public class CatalogueController {
 		
 		List<StockUsageInventory> usageRecords = customer.getUsageOfTheCustomer();
 		for (StockUsageInventory record : usageRecords) {
-			Inventory item = cservice.findPartById(record.getProductId());
-			record.setInventory(item);
+			Inventory dbItem = cservice.findPartById(record.getProductId());
+			record.setInventory(dbItem);
 			record.setStockUsage(customer);
+			
+			StockUsageInventory dbRecord = cservice.findUsageById(record.getId());
+			dbItem.setQuantity(dbItem.getQuantity() + dbRecord.getQuantity() - record.getQuantity());
+			
 			cservice.saveStockUsageInventory(record);
 		}
 	
@@ -136,6 +144,21 @@ public class CatalogueController {
 
 		return "customerusage";
 	}
+	
+	
+	//showing the detail of a single inventory, its usage history
+	@RequestMapping(value = "/showinventory/{id}")
+	public String listUsageOfThisInventory(@PathVariable("id") Integer id, ModelMap model) {
+
+		Inventory item = cservice.findPartById(id); // to get customerName and CarId
+		List<StockUsageInventory> usagesOfTheInventory = item.getStockUsageInventory();
+
+		model.addAttribute("item", item);
+		model.addAttribute("usagesOfTheInventory", usagesOfTheInventory);
+
+		return "inventoryusage";
+	}
+	
 
 	//editing the StockUsageInventory records of the customer
 	@RequestMapping(value = "/edit/{id}")

@@ -18,18 +18,18 @@
 	<form action="#" th:object="${user}" th:action="@{/user/save}"
 		method="post">
 		<fieldset>
-			<input type="hidden" th:field="*{id}">
+			<input type="hidden" th:field="*{id}" th:value="*{id}">
 		</fieldset>
 		<fieldset>
-			Full Name <input type="text" th:field="*{name}">
+			Full Name <input type="text" th:field="*{name}" th:value="*{name}">
 			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 		</fieldset>
 		<fieldset>
-			Username <input type="text" th:field="*{username}">
+			Username <input type="text" th:field="*{username}" th:value="*{username}">
 			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 		</fieldset>
 		<fieldset>
-			Password <input type="password" th:field="*{password}">
+			Password <input type="password" th:field="*{password}" th:value="*{password}">
 			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 		</fieldset>
 		<fieldset>

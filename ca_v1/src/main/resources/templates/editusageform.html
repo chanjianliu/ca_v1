@@ -60,7 +60,7 @@
 						</td>
 
 						<td><input type="number"
-							th:field="*{usageOfTheCustomer[__${itemStat.index}__].quantity}">
+							th:field="*{usageOfTheCustomer[__${itemStat.index}__].quantity}" th:min="1">
 							<p
 								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].quantity')}"
 								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].quantity}"></p>

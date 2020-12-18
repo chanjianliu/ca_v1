@@ -55,7 +55,7 @@ class CreateInventoryRecordTest {
 		iWheel.setProductState(ProductState.InStock);
 		iWheel.setQuantity(50);
 		iWheel.setShelfLocation(3);
-		iWheel.setProduct(pWheel);
+		pWheel.setInventory(iWheel);
 
 		prepo.save(pWheel);
 		
@@ -77,7 +77,7 @@ class CreateInventoryRecordTest {
 		iWheel2.setProductState(ProductState.InStock);
 		iWheel2.setQuantity(100);
 		iWheel2.setShelfLocation(5);
-		iWheel2.setProduct(pWheel2);
+		pWheel2.setInventory(iWheel2);
 
 		prepo.save(pWheel2);
 		
@@ -100,7 +100,7 @@ class CreateInventoryRecordTest {
 		iWheel3.setProductState(ProductState.InStock);
 		iWheel3.setQuantity(100);
 		iWheel3.setShelfLocation(7);
-		iWheel3.setProduct(pWheel3);
+		pWheel3.setInventory(iWheel3);
 
 		prepo.save(pWheel3);
 		}

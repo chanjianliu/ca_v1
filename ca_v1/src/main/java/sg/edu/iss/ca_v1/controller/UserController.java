@@ -62,14 +62,14 @@ public class UserController {
 			return "addUser";
 		}
 		
-		User dbUser = uservice.findById(user.getId());
-		System.out.println("Inside dbUser");
+//		User dbUser = uservice.findById(user.getId());
+//		System.out.println("Inside dbUser");
 //		dbUser.setId(user.getId());
-		dbUser.setName(user.getName());
-		dbUser.setRole(user.getRole());
-		dbUser.setUsername(user.getUsername());
+//		dbUser.setName(user.getName());
+//		dbUser.setRole(user.getRole());
+//		dbUser.setUsername(user.getUsername());
 //		dbUser.setPassword(user.getPassword());
-		uservice.saveUser(dbUser);
+		uservice.saveUser(user);
 //		else
 //		{
 //			System.out.println("new user");
