@@ -1,4 +1,4 @@
-package sg.edu.iss.ca_v1.model;
+package sg.edu.iss.ca.model;
 
 import java.time.LocalDate;
 
@@ -7,34 +7,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Product  {
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+//	@Column(nullable = false)
 	private String name;
 	private String brand;
 	private LocalDate dom;
 	private String colour;
+//	@Min(1)
+//	@Column(nullable = false)
 	private double oriPrice; 
+//	@Min(1)
 	private double wholesalePrice; //lower price 
+//	@Min(1)
 	private double retailPrice; //highest price
+//	@Min(1)
 	private double partnerPrice; //2nd highest
 	private String description;
 	private String dimension;
 	private String category;
+//	@Min(1)
+//	@Column(nullable = false)
 	private int reorderLevel; // reorder level
+//	@Min(1)
+//	@Column(nullable = false)
 	private int minReorderQuantity; // minimum reorder quantity
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne (cascade=CascadeType.PERSIST)
 	private Supplier supplier;
-	
-	@OneToOne
-	
+	@OneToOne (cascade=CascadeType.PERSIST)
 	private Inventory inventory;
 	
 	public Product() {
@@ -43,7 +50,7 @@ public class Product  {
 
 	public Product(String name, String brand, LocalDate dom, String colour, double oriPrice, double wholesalePrice,
 			double retailPrice, double partnerPrice, String description, String dimension, String category,
-			int reorderLevel, int minReorderQuantity, Supplier supplier, Inventory inventory) {
+			int reorderLevel, int minReorderQuantity, Supplier supplier) {
 		super();
 		this.name = name;
 		this.brand = brand;
@@ -59,7 +66,7 @@ public class Product  {
 		this.reorderLevel = reorderLevel;
 		this.minReorderQuantity = minReorderQuantity;
 		this.supplier = supplier;
-		this.inventory = inventory;
+		this.inventory = new Inventory();
 	}
 
 	public int getId() {
