@@ -11,7 +11,7 @@
 
 	<header th:insert="layout/loglayout.html :: header"></header>
 	<div th:replace="layout/loglayout.html :: menu"></div>
-
+	<h2>Customer Detail</h2>
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 	<table>
 		<tr>
@@ -60,7 +60,7 @@
 		</tr>
 		<tr th:each="obj:${usagesOfTheCustomer}">
 			<td th:text="${obj.productId}">Product Id</td>
-			<td th:text="${obj.inventory.product.name}">Product Name</td>
+			<td><a th:href="@{/catalogue/showinventory/}+${obj.productId}" th:text="${obj.inventory.product.name}">Product Name</a></td>
 			<td th:text="${obj.inventory.product.brand}">Brand</td>
 			<td th:text="${obj.inventory.product.retailPrice}">Retail Price</td>
 			<td th:text="${obj.inventory.product.description}">Description</td>

@@ -1,5 +1,6 @@
 package sg.edu.iss.ca_v1.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class CatalogueImplementation implements CatalogueInterface {
 	StockUsageRepository surepo;
 	@Autowired
 	StockUsageInventoryRepository sirepo;
+	
+	@Override
+	public List<StockUsageInventory> findStockUsageInventoryByRegistrationDateBetween(LocalDate startDate, LocalDate endDate){
+		return sirepo.findByRegistrationDateBetween(startDate, endDate);
+	}
 	
 	@Override
 	@Transactional

@@ -1,5 +1,6 @@
 package sg.edu.iss.ca_v1.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import sg.edu.iss.ca_v1.model.DateSelector;
 import sg.edu.iss.ca_v1.model.Inventory;
 import sg.edu.iss.ca_v1.model.StockUsage;
 import sg.edu.iss.ca_v1.model.StockUsageInventory;
@@ -186,10 +188,34 @@ public class CatalogueController {
 	
 	//show the list of StockUsage records (customers list)
 	@RequestMapping(value = "/customers")
-	public String customerList(Model model) {
+	public String customerList(ModelMap model) {
 		List<StockUsage> customerList = cservice.listAllStockUsages();
 		model.addAttribute("customers", customerList);
+		model.addAttribute("active", "active");
 		return "customerlist";
+	}
+	
+	//stockUsageInventoryPage (can use date search)
+	@RequestMapping(value = "/listrecord")
+	public String showRecordLsit(ModelMap model) {
+		DateSelector dates = new DateSelector();
+		model.addAttribute("dates",dates);
+		
+		List<StockUsageInventory> records = cservice.listAllStockUsageInventories();
+		model.addAttribute("records",records);
+		return "allrecordlist";
+		
+	}
+	
+	@RequestMapping(value = "/stockusgeinventorybydaterange")
+	public String showRecordByDateRange(@ModelAttribute("dates")@Valid DateSelector dates, Model model) {
+		LocalDate start = LocalDate.parse(dates.getStartDate());
+		LocalDate end = LocalDate.parse(dates.getEndDate());
+		
+		List<StockUsageInventory> recordsByDateRange = cservice.findStockUsageInventoryByRegistrationDateBetween(start, end);
+		model.addAttribute("recordsByDateRange",recordsByDateRange);
+		
+		return "recordsbydates";
 	}
 
 }

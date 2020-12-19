@@ -74,8 +74,8 @@
 <!-- 			<th>Delete</th> -->
 		</tr>
 		<tr th:each="obj:${usagesOfTheInventory}">
-			<td th:text="${obj.stockUsage.id}">Product Id</td>
-			<td th:text="${obj.stockUsage.customerName}">Product Name</td>
+			<td th:text="${obj.stockUsage.id}">Customer Id</td>
+			<td><a th:href="@{/catalogue/showcustomer/}+${obj.stockUsage.id}" th:text="${obj.stockUsage.customerName}">Customer Name</a></td>
 			<td th:text="${obj.stockUsage.carId}">Brand</td>
 			<td th:text="${obj.quantity}">Retail Price</td>
 			<td	th:text="${#temporals.format(obj.registrationDate, 'dd-MMM-yyyy')}">Date</td>
