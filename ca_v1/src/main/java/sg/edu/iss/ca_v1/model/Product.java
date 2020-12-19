@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Product {
 
@@ -20,6 +22,7 @@ public class Product {
 	@Column(nullable = false)
 	private String name;
 	private String brand;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dom;
 	private String colour;
 //	@Min(1)
@@ -34,6 +37,7 @@ public class Product {
 	private String description;
 	private String dimension;
 	private String category;
+	private int supId; //supplier's id
 //	@Min(1)
 //	@Column(nullable = false)
 	private int reorderLevel; // reorder level
@@ -196,6 +200,14 @@ public class Product {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public int getSupId() {
+		return supId;
+	}
+
+	public void setSupId(int supId) {
+		this.supId = supId;
 	}
 
 }

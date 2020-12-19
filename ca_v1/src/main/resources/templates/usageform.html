@@ -69,6 +69,16 @@
 		</fieldset>
 	</form>
 
+<br/>
+
+	<table>
+		<tr>
+		<td>
+			<a th:href="@{/catalogue/showcustomer/}+${newUsageRecord.stockUsage.id}"><button>Return to Customer Detail</button></a>
+		</td>
+		</tr>
+	</table>
+	
 	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

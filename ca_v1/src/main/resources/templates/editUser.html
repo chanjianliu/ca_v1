@@ -11,7 +11,7 @@
 
 	<header th:insert="layout/loglayout.html :: header"></header>
 	<div th:replace="layout/loglayout.html :: menu"></div>
-	<h2>New User</h2>
+	<h2>Edit User Information</h2>
 
 	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
 
@@ -46,6 +46,19 @@
 		</fieldset>
 	</form>
 
+<br/>
+
+	<table>
+		<tr>
+		<td>
+			<a th:href="@{/user/showuser/}+${user.id}"><button>Return to User Detail</button></a>
+		</td>
+		<td>
+			<a th:href="@{/user/delete/}+${user.id}"><button>Delete User</button></a>
+		</td>
+		</tr>
+	</table>
+	
 	<div th:replace="layout/loglayout.html :: footer"></div>
 </body>
 </html>

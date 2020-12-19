@@ -9,8 +9,8 @@
 </head>
 <body>
 
-	<header th:insert="layout/layout.html :: header"></header>
-	<div th:replace="layout/layout.html :: menu"></div>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
 	
 	<H3>Enter Start Date and End Date to Retrieve Usage Records</H3>
 	
@@ -71,6 +71,8 @@
 			<td th:text=${record.registrationDate}>Registration Date</td>
 		</tr>
 	</table>
+	
+	
 	
 	<table>
 			<tr>

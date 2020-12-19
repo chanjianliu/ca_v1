@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Inventory Form</title>
+</head>
+
+<body>
+	<header th:insert="layout/loglayout.html :: header"> </header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+	
+	<h1>Inventory Form</h1>
+	
+	<form action="#" th:object="${inventory}" th:action = "@{/inventory/save}" method = "post">
+		<table>
+		<tr colspan=3>
+			<th th:text="${inventory.product.name}"></th>
+		</tr>
+		<tr>
+			<th >Shelf Location</th>
+			<th >Quantity</th>
+			<th >Product State</th>
+		</tr>
+		<tr class="table-row">
+			<td>
+			<input type="hidden" th:field="*{product.id}" th:value="*{product.id}">
+			<input type="hidden" th:field="*{id}" th:value="*{id}">
+			<input type="text" th:field="*{shelfLocation}" th:value="*{shelfLocation}"></td>
+			<td><input type="text" th:field="*{quantity}"></td>
+			<td>		
+			<fieldset>
+			Product State 
+			<select th:field="*{productState}">
+				<option value="InStock">In Stock</option>
+				<option value="BelowReorderLevel">BelowReorderLevel</option>
+			</select>
+			<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+		</fieldset></td>
+		</tr>
+	</table>
+	<p>
+		<input type="submit" value="Save" /> &nbsp; &nbsp; 
+		<input type="reset" value="Reset" />
+	</p>
+	
+	</form>
+	
+			<div th:replace="layout/loglayout.html :: footer"></div>
+	
+</body>

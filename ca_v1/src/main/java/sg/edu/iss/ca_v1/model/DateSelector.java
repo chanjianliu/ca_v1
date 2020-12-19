@@ -7,8 +7,6 @@ public class DateSelector {
 	
 	private String endDate;
 	
-	
-	
 	public String getStartDate() {
 		return startDate;
 	}

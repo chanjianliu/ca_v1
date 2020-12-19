@@ -60,6 +60,19 @@ public class CatalogueController {
 		cservice.saveStockUsage(customer);
 		return "forward:/catalogue/showcustomer/" + customer.getId();
 	}
+	
+	//deleting a customer record (StockUsage)
+	@RequestMapping(value = "/deletecustomer/{id}")
+	public String deleteCustomer(@PathVariable("id") Integer id, ModelMap model) {
+		StockUsage customer = cservice.findCustomerById(id);
+		List<StockUsageInventory> customerRecords = cservice.listUsageByCustomerId(id);
+		for (StockUsageInventory record : customerRecords) {
+			cservice.deleteStockUsageInventory(record);
+		}
+		
+		cservice.deleteStockUsage(customer);
+		return "forward:/catalogue/customers";
+	}
 
 	// add a new StockUsageInventory record
 	@RequestMapping(value = "/addusageform/{id}", method = RequestMethod.GET)

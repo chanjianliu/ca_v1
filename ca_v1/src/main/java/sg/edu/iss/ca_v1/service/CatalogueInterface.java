@@ -23,6 +23,7 @@ public interface CatalogueInterface {
 	public void saveStockUsageInventory(StockUsageInventory si);
 
 	public void deleteStockUsageInventory(StockUsageInventory si);
+	public void deleteStockUsage(StockUsage su);
 	
 	public List<Inventory> listAllInventories();
 	

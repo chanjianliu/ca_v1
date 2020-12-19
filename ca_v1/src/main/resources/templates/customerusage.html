@@ -5,7 +5,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="../static/css/site.css">
-<title>Index Page</title>
+<title>Customer Detail</title>
 </head>
 <body>
 
@@ -23,9 +23,12 @@
 		<tr>
 			<td> Customer CarId<span th:text="${customer.carId}"> </span></td>
 		</tr>
-			<tr>
+			<tr colspan=3>
 			<td><a th:href="@{/catalogue/editcustomer/}+${customer.id}">
 				<button>Edit Customer</button></a>
+			</td>
+			<td><a th:href="@{/catalogue/deletecustomer/}+${customer.id}">
+				<button>Delete Customer</button></a>
 			</td>
 			</tr>
 	</table>
@@ -73,6 +76,9 @@
 			<td colspan=9>
 			<a th:href="@{/catalogue/customers/}">
 				<button>Back to Customer List</button>
+			</a>
+			<a th:href="@{/catalogue/listrecord/}">
+				<button>Back to Inventory Usage List</button>
 			</a>
 			<a th:href="@{/catalogue/addusageform/}+${customer.id}">
 				<button>Add New Part</button>

@@ -2,6 +2,8 @@ package sg.edu.iss.ca_v1.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import sg.edu.iss.ca_v1.model.User;
 
 public interface UserInterface {
@@ -12,4 +14,5 @@ public interface UserInterface {
 	public User findById(Integer id);
 	public boolean equals(User other);
 	public User findByName(String name);
+	public Page<User> findAll(int pageNumber);
 }

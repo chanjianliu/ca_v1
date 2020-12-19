@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+          <link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+<title>Products Listing</title>
+</head>
+<body>
+	<div th:insert="layout/loglayout.html :: header"></div>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+
+	<h2>Product List</h2>
+	<h2 th:if="${#lists.isEmpty(products)}">Product List is
+		empty</h2>
+	<table th:if="${not #lists.isEmpty(products)}">
+		<tr>
+			<th >Product Id</th>
+			<th >Name</th>
+			<th >Brand</th>
+			<th >DOM</th>
+			<th >Color</th>
+			<th >Original Price</th>
+			<th >Whole Sale Price</th>
+			<th >Retail Price</th>
+			<th >Partner Price</th>
+			<th >Description</th>
+			<th >Dimension</th>
+			<th >Category</th>
+			<th >Reorder Level</th>
+			<th >minReorder Quantity</th>
+			<th >Supplier</th>
+			<th> Shelf Location</th>
+			<th> Quantity</th>
+			<th> Product State</th>
+			<th >Edit Product</th>
+			<th >Delete Product</th>
+
+		</tr>
+		<tr th:each="product:${products}" class="table-row">
+			<td th:text="${product.inventory.id}">Id</td>
+			<td th:text="${product.name}">name</td>
+			<td th:text="${product.brand}">brand</td>
+			<td th:text="${#temporals.format(product.dom, 'dd-MMM-yyyy')}">dom</td>
+			<td th:text="${product.colour}">colour</td>
+			<td th:text="${product.oriPrice}">oriPrice</td>
+			<td th:text="${product.wholesalePrice}">wholesalePrice</td>
+			<td th:text="${product.retailPrice}">retailPrice</td>
+			<td th:text="${product.partnerPrice}">partnerPrice</td>
+			<td th:text="${product.description}">desc</td>
+			<td th:text="${product.dimension}">dimension</td>
+			<td th:text="${product.category}">category</td>
+			<td th:text="${product.reorderLevel}">reorderlevel</td>
+			<td th:text="${product.minReorderQuantity}">minRQ</td>
+			<td th:text="${product.supplier.name}">supplierName</td>
+			<td th:text="${product.inventory.shelfLocation}">ShelfLocation</td>
+			<td th:text="${product.inventory.quantity}">Quantity</td>
+			<td th:if="${product.minReorderQuantity < product.inventory.quantity}">In stock</td>
+			<td th:if="${product.minReorderQuantity >= product.inventory.quantity}">Below Reorder Level</td>
+			<td><a href="EditProduct.html"
+				th:href="@{/product/edit/}+${product.id}">Edit</a></td>
+			<td><a href="DeleteProduct.html"
+				th:href="@{/product/delete/}+${product.id}">Delete</a></td>
+		</tr>
+	</table>
+	
+	
+	<br/>
+		<table>
+			<tr>
+		<td>
+			<a th:href="@{/user/landing}"><button>Return to Main</button></a>
+			<a th:href="@{/product/add}"><button>Add New Product</button></a>
+		</td>
+		</tr>
+	</table>
+	
+	<div th:replace="layout/loglayout.html :: footer"></div>
+
+</body>
+</html>

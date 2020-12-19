@@ -5,6 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ca_v1.model.User;
@@ -25,6 +28,11 @@ public class UserImplementation implements UserInterface {
 	@Override
 	public List<User> listAllUser() {
 		return urepo.findAll();
+	}
+	
+	public Page<User> findAll(int pageNumber) {
+		Pageable pageable=PageRequest.of(pageNumber - 1, 10);
+		return  urepo.findAll(pageable);
 	}
 	
 	@Override

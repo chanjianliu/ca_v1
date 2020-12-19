@@ -132,6 +132,12 @@ public class CatalogueImplementation implements CatalogueInterface {
 	
 	@Override
 	@Transactional
+	public void deleteStockUsage(StockUsage su) {
+		surepo.delete(su);
+	}
+	
+	@Override
+	@Transactional
 	public List<Inventory> listAllInventories() {
 		return irepo.findAll();
 	}

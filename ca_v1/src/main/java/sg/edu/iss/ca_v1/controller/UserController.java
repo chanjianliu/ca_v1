@@ -1,9 +1,12 @@
 package sg.edu.iss.ca_v1.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -28,9 +31,6 @@ public class UserController {
 	private UserInterface uservice;
 	
 	@Autowired
-	private UserRepository urepo;
-	
-	@Autowired
 	public void setUserInterface(UserImplementation uimpl) {
 		this.uservice = uimpl;
 	}
@@ -40,11 +40,30 @@ public class UserController {
 				
 	}
 	
-	@RequestMapping(value="/list")
-	public String list(Model model) {
-		model.addAttribute("users", uservice.listAllUser());
+//	//old user list page w/o pagination
+//	@RequestMapping(value="/list")
+//	public String list(Model model) {
+//		model.addAttribute("users", uservice.listAllUser());
+//		return "userList";
+//	}
+	
+ 	@RequestMapping(value="/page/{pageNumber}")
+	public String listByPage(Model model,@PathVariable("pageNumber") int currentPage) {
+ 		Page<User> page=uservice.findAll(currentPage);
+ 		
+ 		long total=page.getTotalElements();
+ 		int totalPages=page.getTotalPages();
+ 		
+ 		List<User> list=page.getContent();
+ 		
+ 		model.addAttribute("currentPage",currentPage);
+ 		model.addAttribute("total",total);
+ 		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("list", list);
+		model.addAttribute("users", uservice.findAll(currentPage));
+		
 		return "userList";
-	}
+ 	}
 	
 	@RequestMapping(value="/add") 
 	public String add(ModelMap model){
@@ -80,22 +99,25 @@ public class UserController {
 	
 	@RequestMapping(value="/showuser/{id}")
 	public String showdetail(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("user", urepo.findById(id).get());
+		model.addAttribute("user", uservice.findById(id));
 		
 		return "showuser";
 	}
 	
 	@RequestMapping(value="/edit/{id}")
 	public String editForm(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("user", urepo.findById(id).get());
+		model.addAttribute("user", uservice.findById(id));
 		return "editUser";
 	}
 	
 	@RequestMapping(value="/delete/{id}")
 	public String deleteUser(Model model, @PathVariable("id") Integer id) {
-		uservice.deleteUser(urepo.findById(id).get());
-		return "forward:/user/list";
+		
+		uservice.deleteUser(uservice.findById(id));
+		return "forward:/user/page/1";
 	}
+	
+	
 	
 //All the login and logout stuff
 	@RequestMapping(path = "/login")
