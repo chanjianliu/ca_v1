@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 
 import sg.edu.iss.ca_v1.model.Supplier;
 
+
 public interface SupplierInterface {
 
 	public List<Supplier> listAllSuppliers();

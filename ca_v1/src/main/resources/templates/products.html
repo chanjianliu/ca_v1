@@ -42,7 +42,7 @@
 		</tr>
 		<tr th:each="product:${products}" class="table-row">
 			<td th:text="${product.inventory.id}">Id</td>
-			<td th:text="${product.name}">name</td>
+			<td><a th:href="@{/catalogue/showinventory/}+${product.inventory.id}" th:text="${product.name}">name</a></td>
 			<td th:text="${product.brand}">brand</td>
 			<td th:text="${#temporals.format(product.dom, 'dd-MMM-yyyy')}">dom</td>
 			<td th:text="${product.colour}">colour</td>

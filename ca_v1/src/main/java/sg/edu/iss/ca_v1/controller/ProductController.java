@@ -1,5 +1,7 @@
 package sg.edu.iss.ca_v1.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.ca_v1.model.Inventory;
 import sg.edu.iss.ca_v1.model.Product;
+import sg.edu.iss.ca_v1.model.StockUsageInventory;
 import sg.edu.iss.ca_v1.model.Supplier;
 import sg.edu.iss.ca_v1.service.InventoryImplementation;
 import sg.edu.iss.ca_v1.service.InventoryInterface;
 import sg.edu.iss.ca_v1.service.ProductImplementation;
 import sg.edu.iss.ca_v1.service.ProductInterface;
+import sg.edu.iss.ca_v1.service.StockUsageInventoryImplementation;
+import sg.edu.iss.ca_v1.service.StockUsageInventoryInterface;
 import sg.edu.iss.ca_v1.service.SupplierImplementation;
 import sg.edu.iss.ca_v1.service.SupplierInterface;
 
@@ -49,6 +54,16 @@ public class ProductController {
 		this.iservice = iserviceImpl;
 	}
 
+	@Autowired
+	private StockUsageInventoryInterface suiservice;
+	
+	@Autowired
+	public void setStockUsageInventoryService(StockUsageInventoryImplementation suiserviceImpl) {
+		this.suiservice = suiserviceImpl;
+	}
+	
+	
+	
 	@RequestMapping(value = "/list")
 	public String list(Model model) {
 		model.addAttribute("products", pservice.findAllProducts());
@@ -63,8 +78,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/edit/{id}")
-	public String editForm(@PathVariable("id") Integer id, Model model) {
+	public String editProductForm(@PathVariable("id") Integer id, ModelMap model) {
 		model.addAttribute("product", pservice.findProductById(id));
+		model.addAttribute("suppliers", sservice.listAllSuppliers());
 		return "product-form";
 	}
 
@@ -103,15 +119,26 @@ public class ProductController {
 		product.setSupplier(supplier);
 		pservice.saveProduct(product);
 
-		return "forward:/inventory/add/"+product.getId();
+		return "forward:/product/inventory/add/"+product.getId();
 	}
 
 	@RequestMapping(value = "/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Integer id) {
 		Product product = pservice.findProductById(id);
-		Inventory productInventory = product.getInventory();
-		iservice.deleteInventory(productInventory);
+		Inventory productInventory = iservice.findInventoryById(product.getInventory().getId());
+		
+		List<StockUsageInventory> recordLists = productInventory.getStockUsageInventory();
+		
+		if (recordLists != null)
+		{
+			for (StockUsageInventory record : recordLists) {
+				suiservice.deleteStockUsageInventory(record);
+			}
+		}
+		
+//		iservice.deleteInventory(productInventory); //not working
 		pservice.deleteProduct(product);
+		
 		return "forward:/product/list";
 	}
 
@@ -120,7 +147,7 @@ public class ProductController {
 	public String addForm(@PathVariable("id") Integer id, ModelMap model) {
 		Product product = pservice.findProductById(id);
 		Inventory inventory = new Inventory();
-		inventory.setProduct(product);
+		model.addAttribute("product", product);
 		model.addAttribute("inventory", inventory);
 		return "inventory-form";
 	}
@@ -137,5 +164,26 @@ public class ProductController {
 		pservice.saveProduct(product);
 		
 		return "forward:/product/list";
+	}
+	
+	@RequestMapping(value = "/inventory/saveedit/{id}")
+	public String saveInventoryEdit(@PathVariable("id") Integer id, @ModelAttribute("inventory") @Valid Inventory inventory, 
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "inventoryedit";
+		}
+		
+		Product product = pservice.findProductById(id);
+		product.setInventory(inventory);
+		pservice.saveProduct(product);
+		
+		return "forward:/catalogue/showinventory/"+inventory.getId();
+	}
+	
+	@RequestMapping(value = "/inventory/edit/{id}")
+	public String editInventoryForm(@PathVariable("id") Integer id, Model model) {
+		
+		model.addAttribute("inventory", iservice.findInventoryById(id));
+		return "inventoryedit";
 	}
 }

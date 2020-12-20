@@ -13,10 +13,10 @@
 	
 	<h1>Inventory Form</h1>
 	
-	<form action="#" th:object="${inventory}" th:action = "@{/product/inventory/save/}+${product.id}" method = "post">
+	<form action="#" th:object="${inventory}" th:action = "@{/product/inventory/saveedit/}+${inventory.product.id}" method = "post">
 		<table>
 		<tr colspan=3>
-			<th th:text="${product.name}"></th>
+			<th th:text="${inventory.product.name}"></th>
 		</tr>
 		<tr>
 			<th >Shelf Location</th>
@@ -25,7 +25,7 @@
 		</tr>
 		<tr class="table-row">
 			<td>
-			<!-- <input type="hidden" th:field="*{product.id}" th:value="${product.id}"> -->
+			<input type="hidden" th:field="*{product.id}" th:value="*{product.id}">
 			<input type="hidden" th:field="*{id}" th:value="*{id}">
 			<input type="text" th:field="*{shelfLocation}" th:value="*{shelfLocation}"></td>
 			<td><input type="text" th:field="*{quantity}" th:value="*{quantity}"></td>
@@ -35,6 +35,7 @@
 			<select th:field="*{productState}">
 				<option value="InStock">In Stock</option>
 				<option value="BelowReorderLevel">Below Reorder Level</option>
+				<option value="ReorderPlaced">Reorder Placed</option>
 			</select>
 			<p th:if="${#fields.hasErrors('productState')}" th:errors="*{productState}"></p>
 		</fieldset></td>

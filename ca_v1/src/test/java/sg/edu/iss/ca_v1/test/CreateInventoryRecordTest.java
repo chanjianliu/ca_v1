@@ -79,6 +79,7 @@ class CreateInventoryRecordTest {
 		iWheel2.setShelfLocation(5);
 		pWheel2.setInventory(iWheel2);
 
+		//iWheel2.setProduct(pWheel2);
 		prepo.save(pWheel2);
 		
 		

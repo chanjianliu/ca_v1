@@ -46,7 +46,7 @@ public class Product {
 	private int minReorderQuantity; // minimum reorder quantity
 	@ManyToOne (cascade=CascadeType.PERSIST)
 	private Supplier supplier;
-	@OneToOne (cascade=CascadeType.PERSIST)
+	@OneToOne (cascade=CascadeType.ALL)
 	private Inventory inventory;
 	
 	public Product() {

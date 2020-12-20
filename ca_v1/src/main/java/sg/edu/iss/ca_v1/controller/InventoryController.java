@@ -34,14 +34,6 @@ public class InventoryController {
 
 
 
-	@RequestMapping(value = "/edit/{id}")
-	public String editForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("inventory", iservice.findInventoryById(id));
-		return "inventory-form";
-	}
-
-
-
 	@RequestMapping(value = "/delete/{id}")
 	public String deleteInventory(@PathVariable("id") Integer id) {
 		iservice.deleteInventory(iservice.findInventoryById(id));
