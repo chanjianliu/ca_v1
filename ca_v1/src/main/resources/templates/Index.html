@@ -7,6 +7,9 @@
 <body>
 	<div th:replace="fragments/general.html :: header"></div>
 	<div th:replace="fragments/general.html :: menu"></div>
+	<input type="button" value="Send a email"
+		onclick="window.location.href='/mail/send'; return false"
+		class="button" />
 	<div th:replace="fragments/general.html :: footer"></div>
 </body>
 </html>

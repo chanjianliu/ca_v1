@@ -24,15 +24,15 @@ public class MailController {
 		javaMailSender_126.setHost("smtp.126.com");
 		javaMailSender_126.setPort(25);
 		javaMailSender_126.setUsername("springtestbox@126.com");
-		javaMailSender_126.setPassword("BRHYMCVEVKEDSOLN");
+		javaMailSender_126.setPassword("LRYWPOWHRSHWJSNE");
 		
 		// Create a mail sender mailtrap
 		JavaMailSenderImpl javaMailSender_mailtrap = new JavaMailSenderImpl();
 		javaMailSender_mailtrap.setHost("smtp.mailtrap.io");
 		javaMailSender_mailtrap.setPort(25);
-		javaMailSender_mailtrap.setUsername("e29cc640fa90eb");
-		javaMailSender_mailtrap.setPassword("fa9e5c7ab33336");
-		
+		javaMailSender_mailtrap.setUsername("0ae1eaf205f208");
+		javaMailSender_mailtrap.setPassword("49436a27e2390d");
+
 		// Create an email instance, choose a email server
 		JavaMailSenderImpl javaMailSender = javaMailSender_126;
 		
@@ -47,10 +47,10 @@ public class MailController {
 		smm.setText("This is a sample message");
 		
 		// Send mail ## Server not work.
-		// javaMailSender.send(smm);
+		javaMailSender.send(smm);
 		
 		// Record something
 		System.out.println("Sended successfully");
-		return "sended";
+		return "mail_sended";
 	}
 }
