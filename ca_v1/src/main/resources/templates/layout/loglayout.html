@@ -33,13 +33,24 @@
 						</ul></li> -->
 					<li><a href="#">Page 2</a></li>
 				</ul>
+			
 				<ul class="nav navbar-nav navbar-right">
+					
+      				<li><a href="#" th:href="@{/supplier/list}">Supplier</a></li>
+      				<li><a href="#" th:href="@{/user/list}">Users</a></li>
+      				<li><a href="#" th:href="@{/catalogue/listrecord}">Stock Usage list</a></li>
+      				<li><a href="#" th:href="@{/catalogue/customers}">Customers</a></li>
+      				<li><a href="#" th:href="@{/catalogue/list}">Catalogue</a></li>
+      				
 					<li><a href="/user/logout"><span class="glyphicon glyphicon-log-in"></span>
 							Logout</a></li>
 				</ul>
+				
 			</div>
 		</nav>
 	</div>
+	
+
 	
 	<footer th:fragment="footer" id="footer" class="footer">
 		<a href="Home" th:href="@{/user/landing}"><small>Back to Home</small></a> <br /> <small>Now
