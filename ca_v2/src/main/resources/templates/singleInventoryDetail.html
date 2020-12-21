@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+
+
+<body>
+
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+	<h2>Update Stock Status</h2>
+
+	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
+
+	<!-- th:action="@{/catalogue/saveUpdatedInventory/}+${inventoryToBeChanged.id}" -->
+	<form action="#" th:object="${inventoryToBeChanged}"
+		th:action="@{/catalogue/saveupdatedinventory/}+${inventoryToBeChanged.id}"
+		method="post">
+		<fieldset>
+			
+			<input type="hidden" th:field="*{shelfLocation}" th:value="*{shelfLocation}">
+			<input type="hidden" th:field="*{quantity}" th:value="*{quantity}">
+		</fieldset>
+		<fieldset>
+			Id: <input type="hidden" th:field="*{id}" th:value="*{id}"><span
+				th:text="*{id}">Id</span>
+		</fieldset>
+		<fieldset>
+			Name: <input type="hidden" th:field="*{product.name}"
+				th:value="*{product.name}"><span th:text="*{product.name}">Customer
+				Name</span>
+		</fieldset>
+		<fieldset>
+			Current Status: <span th:text="*{productState}">Current
+				Status</span>
+		</fieldset>
+		<br />
+
+		<fieldset>
+			<table>
+				<theader>
+				<tr>
+
+					<th>Change Status</th>
+				</tr>
+				</theader>
+				<tbody>
+					<tr>
+						<!-- th:if="${not #lists.isEmpty(inventoryToBeChanged)}" -->
+						<td><select th:field=" *{productState}">
+								<!-- <option th:each="ps:${pStates}"
+									th:value="${ps.type}" th:text="${ps.type}"></option> -->
+
+								<option th:value="InStock">In Stock</option>
+								<option th:value="BelowReorderLevel">Reorder Placed</option>
+								<option th:value="ReorderPlaced">Below Reorder Level</option>
+
+						</select>
+				</tbody>
+			</table>
+		</fieldset>
+
+		<fieldset>
+			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+				type="reset" value="Reset" />
+		</fieldset>
+	</form>
+
+	<br />
+
+	<!-- <table>
+		<tr>
+			<td><a
+				th:href="@{/catalogue/showcustomer/}+${newUsageRecord.stockUsage.id}"><button>Return
+						to Customer Detail</button></a></td>
+		</tr>
+	</table> -->
+
+	<div th:replace="layout/loglayout.html :: footer"></div>
+</body>
+</html>

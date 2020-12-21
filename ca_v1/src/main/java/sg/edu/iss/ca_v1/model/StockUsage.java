@@ -26,6 +26,11 @@ public class StockUsage {
 	public StockUsage() {
 		super();
 	}
+	public StockUsage(int carId, String customerName) {
+		super();
+		this.carId = carId;
+		this.customerName = customerName;
+	}
 
 	public StockUsage(String customerName) {
 		super();

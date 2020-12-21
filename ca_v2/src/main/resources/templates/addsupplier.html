@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Supplier Form</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+	<h2>New Supplier</h2>
+	
+	<form action="#" th:object="${supplier}" th:action="@{/supplier/save}"
+		method="post">
+		<fieldset>
+			<input type="hidden" th:field="*{id}">
+		</fieldset>
+		<fieldset>
+			Name <input type="text" th:field="*{name}">
+			<p th:if="${#fields.hasErrors('name')}"
+				th:errors="*{name}"></p>
+		</fieldset>
+		<fieldset>
+			Address <input type="text" th:field="*{address}">
+			<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+		</fieldset>
+		<fieldset>
+			Email <input type="text" th:field="*{email}">
+			<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+		</fieldset>
+		<fieldset>
+			PhoneNumber <input type="text" th:field="*{phoneNumber}">
+			<p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+		</fieldset>
+
+		<fieldset>
+			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+				type="reset" value="Reset" />
+		</fieldset>
+
+	</form>
+	<br />
+	<div th:replace="layout/loglayout.html :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
+<title>Stock Usage List</title>
+</head>
+<body>
+
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+	
+	
+
+	<h2 th:if="${not #lists.isEmpty(recordsByDateRange)}">Stock Usage List</h2>
+	<h4 th:if="${not #lists.isEmpty(recordsByDateRange)}">Search Result</h4>
+	<table > 
+
+		<tr>
+			<th>Item Id</th>
+			<th>Item Name</th>
+			<th>Customer name</th>
+			<th>Car Id</th>
+			<th>Registration Date</th>
+		</tr>
+		<tr th:if="${not #lists.isEmpty(recordsByDateRange)}" th:each="record:${recordsByDateRange}">
+			<td th:text=${record.productId}>Item Id</td>
+			<td><a th:href="@{/catalogue/showinventory/}+${record.productId}" th:text=${record.inventory.product.name}>Item Name</a></td>
+			<td><a th:href="@{/catalogue/showcustomer/}+${record.stockUsage.id}" th:text=${record.stockUsage.customerName}>Customer Name</a></td>
+			<td th:text=${record.stockUsage.carId}>Car Id</td>
+			<td th:text=${record.registrationDate}>Registration Date</td>
+		</tr>
+	</table>
+	
+	<table>
+			<tr>
+			<td>
+				<a th:href="@{/catalogue/listrecord}"><button>Return to List</button></a> 
+				<!-- <a th:href="@{/catalogue/addcustomer}"><button>Add New User</button></a> -->
+			</td>
+		</tr>
+	</table>
+
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>

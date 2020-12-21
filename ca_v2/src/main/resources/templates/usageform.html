@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+
+
+<body>
+
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+	<h2>New User</h2>
+
+	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
+
+	<form action="#" th:object="${newUsageRecord}"
+		th:action="@{/catalogue/saveusagerecord/}+${newUsageRecord.stockUsage.id}" method="post">
+			<fieldset><input type="hidden" th:field="*{id}" th:value="*{id}"></fieldset>
+			<fieldset>Id: <input type="hidden" th:field="*{stockUsage.id}" th:value="*{stockUsage.id}"><span th:text="*{stockUsage.id}">Id</span> </fieldset>
+			<fieldset>Customer Name: <input type="hidden" th:field="*{stockUsage.customerName}" th:value="*{stockUsage.customerName}"><span th:text="*{stockUsage.customerName}">Customer Name</span> </fieldset>
+			<fieldset>Car Id: <input type="hidden" th:field="*{stockUsage.carId}" th:value="*{stockUsage.carId}"><span th:text="*{stockUsage.carId}">Customer Name</span></fieldset>
+		<br/>
+		
+		<fieldset>
+			<table>
+				<theader>
+					<tr>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Date</th>
+					</tr>
+				</theader>
+				<tbody>
+					<tr>
+						<td th:if="${not #lists.isEmpty(inventories)}"><select 
+							th:field=" ${newUsageRecord.productId}">
+								<option th:each="inventory:${inventories}" th:value="${inventory.id}" th:text="${inventory.product.name}"></option>
+						</select>
+							<p
+								th:if="${#fields.hasErrors('productId')}"
+								th:errors="${newUsageRecord.productId}"></p>
+						</td>
+
+						<td><input type="number"
+							th:field="${newUsageRecord.quantity}" th:min="1">
+							<p
+								th:if="${#fields.hasErrors('quantity')}"
+								th:errors="${newUsageRecord.quantity}"></p>
+						</td>
+
+						<td><input type="date"
+							th:field="${newUsageRecord.registrationDate}" />
+							<p
+								th:if="${#fields.hasErrors('registrationDate')}"
+								th:errors="${newUsageRecord.registrationDate}"></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+
+		<fieldset>
+			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+				type="reset" value="Reset" />
+		</fieldset>
+	</form>
+
+<br/>
+
+	<table>
+		<tr>
+		<td>
+			<a th:href="@{/catalogue/showcustomer/}+${newUsageRecord.stockUsage.id}"><button>Return to Customer Detail</button></a>
+		</td>
+		</tr>
+	</table>
+	
+	<div th:replace="layout/loglayout.html :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Member Form</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+
+	<h2>Search Result</h2>
+	
+	<h3 th:if="${#lists.isEmpty(products)}">No content!!!!!!!!</h3>
+		
+	<table th:if="${not #lists.isEmpty(products)}">
+		<tr>
+   <th>Id</th>
+   <th>Name</th>
+   <th>Brand</th>
+   <th>Colour</th>
+   <th>Category</th>
+   <th>Description</th>
+ </tr>
+ <tr th:each="product:${products}">
+   <td th:text="${product.id}">Id</td> 
+   <td><a th:text="${product.name}">Name</a></td>
+   <td th:text="${product.brand}">Brand</td>
+   <td th:text="${product.colour}">Colour</td>
+   <td th:text="${product.category}">Category</td>
+   <td th:text="${product.description}">Description</td>
+ </tr>
+ <tr>
+	<td colspan=3></td>
+	<td colspan=2>
+		<a th:href="@{/user/landing}"><button>Return to Main</button></a>
+		<a th:href="@{/supplier/add}"><button>Add New Supplier</button></a>
+	</td>
+</tr>
+	</table>
+	
+	
+	
+	
+	<div th:replace="layout/loglayout.html :: footer"></div>
+</body>
+</html>

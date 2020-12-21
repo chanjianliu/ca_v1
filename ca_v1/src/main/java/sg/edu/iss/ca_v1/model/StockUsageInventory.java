@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +25,7 @@ public class StockUsageInventory {
 	private int productId;
 	private int customerId; //remember getter setter
 	
+	@PositiveOrZero(message = "You cannot have negative numbers of car parts.")
 	private int quantity; //quantity of the product used
 //	@FutureOrPresent
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

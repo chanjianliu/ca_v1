@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Inventory{
@@ -19,6 +20,7 @@ public class Inventory{
 	private int shelfLocation;
 	private ProductState productState;
 	@Column(nullable = false)
+	@PositiveOrZero(message = "You cannot have negative numbers of products.")
 	private int quantity;
 	@OneToOne(mappedBy = "inventory")
 	private Product product;

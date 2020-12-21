@@ -46,7 +46,7 @@
 						</td>
 
 						<td><input type="number"
-							th:field="${newUsageRecord.quantity}">
+							th:field="${newUsageRecord.quantity}" th:min="1">
 							<p
 								th:if="${#fields.hasErrors('quantity')}"
 								th:errors="${newUsageRecord.quantity}"></p>

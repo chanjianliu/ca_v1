@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/site.css">
+<title>Index Page</title>
+</head>
+<body>
+
+	<header th:insert="layout/loglayout.html :: header"></header>
+	<div th:replace="layout/loglayout.html :: menu"></div>
+
+	<h2>Suppliers List</h2>
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Email</th>
+			<th>Phone</th>
+		</tr>
+		<tr th:each="supplier:${suppliers}">
+			<td th:text="${supplier.id}">Id</td>
+			<td><a th:href="@{/supplier/detail/}+${supplier.id}"
+				th:text="${supplier.name}">Name</a></td>
+			<td th:text="${supplier.address}">Address</td>
+			<td th:text="${supplier.email}">Email</td>
+			<td th:text="${supplier.phoneNumber}">Phone</td>
+		</tr>
+	</table>
+
+	<br />
+	<div>
+		Total Items:[[${total}]] - Page[[${currentPage}]] of [[${totalPages}]]
+		&nbsp; -&nbsp; <a th:if="${currentPage >1}"
+			th:href="@{/supplier/page/1}"> First</a> <span
+			th:unless="${currentPage >1}"> First</span> &nbsp;&nbsp; <a
+			th:if="${currentPage >1}"
+			th:href="@{'/supplier/page/' + ${currentPage - 1}}"> Previous</a> <span
+			th:unless="${currentPage >1}"> Previous</span> &nbsp;&nbsp; <span
+			th:each="i: ${#numbers.sequence(1,totalPages)}"> <a
+			th:if="${i != currentPage}" th:href="@{'/supplier/page/'} + ${i}">[[${i}]]</a>
+			<span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;&nbsp;
+		</span> <a th:if="${currentPage <totalPages}"
+			th:href="@{'/admin/supplier/page/' + ${currentPage + 1}}"> Next</a> <span
+			th:unless="${currentPage <totalPages}"> Next</span> &nbsp;&nbsp; <a
+			th:if="${currentPage <totalPages}"
+			th:href="@{'/admin/supplier/page/' + ${totalPages}}"> Last</a> <span
+			th:unless="${currentPage <totalPages}"> Last</span> &nbsp;&nbsp;
+
+	</div>
+	<br />
+
+	<table>
+		<tr>
+			<td colspan=3></td>
+			<td colspan=2><a th:href="@{/user/landing}"><button>Return
+						to Main</button></a> <a th:href="@{/supplier/add}"><button>Add New
+						Supplier</button></a></td>
+		</tr>
+	</table>
+
+	<div th:replace="layout/loglayout.html :: footer"></div>
+</body>
+</html>
