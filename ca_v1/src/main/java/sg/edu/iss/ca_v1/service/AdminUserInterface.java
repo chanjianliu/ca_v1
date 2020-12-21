@@ -15,7 +15,7 @@ public interface AdminUserInterface {
 	public User findById(Integer id);	
 	public void deleteUser(User user);	
 	public boolean authenticate (User user); 
-	public Page<User> findAll(int pageNumber) ;
+	public Page<User> findAll(int pageNumber,String sortField,String sortDir) ;
 	
 	
 	

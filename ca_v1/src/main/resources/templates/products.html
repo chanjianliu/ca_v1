@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Member Form</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+	
+	<a href="product-form.html" th:href="@{/product/add}">Add Product</a>
+	
+	<h1>Product Listing</h1>
+	<h2 th:if="${not #lists.isEmpty(products)}">Product List is not
+		empty</h2>
+		
+		<div>
+		
+	<table th:if="${not #lists.isEmpty(products)}">
+		<tr>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=id&sortDir=' +${reverseSortDir}}">
+			Product Id</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=name&sortDir=' +${reverseSortDir}}">			
+			Name</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=brand&sortDir=' +${reverseSortDir}}">
+			Brand</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=dom&sortDir=' +${reverseSortDir}}">
+			DOM</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=color&sortDir=' +${reverseSortDir}}">
+			Color</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=oriPrice&sortDir=' +${reverseSortDir}}">
+			Original Price</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=wholesalePrice&sortDir=' +${reverseSortDir}}">
+			Whole Sale Price</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=retailPrice&sortDir=' +${reverseSortDir}}">
+			Retail Price</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=partnerPrice&sortDir=' +${reverseSortDir}}">
+			Partner Price</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=description&sortDir=' +${reverseSortDir}}">
+			Description</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=dimension&sortDir=' +${reverseSortDir}}">
+			Dimension</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=category&sortDir=' +${reverseSortDir}}">
+			Category
+			</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=reorderLevel&sortDir=' +${reverseSortDir}}">
+			Reorder Level</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=minReorderQuantity&sortDir=' +${reverseSortDir}}">
+			minReorder Quantity</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=supplier&sortDir=' +${reverseSortDir}}">
+			Supplier</a></th>
+			<th ><a th:href="@{'/product/page/' +${currentPage} + '?sortField=inventory&sortDir=' +${reverseSortDir}}">
+			Inventory</a></th>
+			<th> <a th:href="@{'/product/page/' +${currentPage} + '?sortField=shelfLocation&sortDir=' +${reverseSortDir}}">
+			Shelf Location</a></th>
+			<th> <a th:href="@{'/product/page/' +${currentPage} + '?sortField=quantity&sortDir=' +${reverseSortDir}}">
+			Quantity</a></th>
+			<th> <a th:href="@{'/product/page/' +${currentPage} + '?sortField=productState&sortDir=' +${reverseSortDir}}">
+			Product State</a></th>
+			
+			<th >Edit Product</th>
+			<th >Delete Product</th>
+
+		</tr>
+		<tr th:each="product:${products}" class="table-row">
+			<td th:text=${product.id}>Id</td>
+			<td th:text=${product.name}>name</td>
+			<td th:text=${product.brand}>brand</td>
+			<td th:text=${product.dom}>dom</td>
+			<td th:text=${product.colour}>colour</td>
+			<td th:text=${product.oriPrice}>oriPrice</td>
+			<td th:text=${product.wholesalePrice}>wholesalePrice</td>
+			<td th:text=${product.retailPrice}>retailPrice</td>
+			<td th:text=${product.partnerPrice}>partnerPrice</td>
+			<td th:text=${product.description}>desc</td>
+			<td th:text=${product.dimension}>dimension</td>
+			<td th:text=${product.category}>category</td>
+			<td th:text=${product.reorderLevel}>reorderlevel</td>
+			<td th:text=${product.minReorderQuantity}>minRQ</td>
+			<td th:text=${product.supplier.id}>supplierId</td>
+			<td th:text=${product.inventory.id}>InventoryId</td>
+			<td th:text=${product.inventory.shelfLocation}>ShelfLocation</td>
+			<td th:text=${product.inventory.quantity}>Quantity</td>
+			<td th:text=${product.inventory.id}>InventoryId</td>
+			<td th:if="${product.minReorderQuantity < product.inventory.quantity}">In stock</td>
+			<td th:if="${product.minReorderQuantity >= product.inventory.quantity}">Below Reorder Level</td>
+			<td><a href="EditProduct.html"
+				th:href="@{/product/edit/}+${product.id}">Edit</a></td>
+			<td><a href="DeleteProduct.html"
+				th:href="@{/product/delete/}+${product.id}">Delete</a></td>
+		</tr>
+	</table>
+	</div>
+
+      
+
+  <form action="#" th:action="@{/product/report}" method="post">
+        <table border="1">
+            <tr>
+                <td>Supplier Id:</td>
+                <td><input type="text" name="id" th:value="${id}" /></td>
+                <td><input type="submit" value="GenerateReport" /></td>
+            </tr>           
+        </table>        
+    </form>
+	
+
+	<div>&nbsp;</div>
+	<br/>
+	<div>
+	     Total Items:[[${total}]] - Page[[${currentPage}]] of [[${totalPages}]]
+	     &nbsp; -&nbsp;
+	     
+	     <a th:if="${currentPage >1}" th:href="@{'/product/page/1?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> First</a>
+	     <span th:unless="${currentPage >1}"> First</span>
+	     &nbsp;&nbsp;
+	     
+	     <a th:if="${currentPage >1}" th:href="@{'/product/page/' + ${currentPage - 1}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Previous</a>
+	     <span th:unless="${currentPage >1}"> Previous</span>
+	     &nbsp;&nbsp;
+	     
+	     <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+	       <a th:if="${i != currentPage}" th:href="@{'/product/page/' + ${i}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}">[[${i}]]</a> 
+	       <span th:unless="${i != currentPage}" >[[${i}]]</span> 
+	       &nbsp;&nbsp;
+	     </span>
+	     
+	     <a th:if="${currentPage <totalPages}" th:href="@{'/product/page/' + ${currentPage + 1}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Next</a>
+	     <span th:unless="${currentPage <totalPages}"> Next</span>
+	     &nbsp;&nbsp;
+	     
+	     <a th:if="${currentPage <totalPages}" th:href="@{'/product/page/' + ${totalPages}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Last</a>
+	     <span th:unless="${currentPage <totalPages}"> Last</span>
+	     &nbsp;&nbsp;
+	   
+	   
+	     
+	     
+	    
+	</div>
+	<br/>
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Member Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+	<h2>New User</h2>
+
+	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
+
+	<form action="#" th:object="${stockUsage}"
+		th:action="@{/catalogue/saveusagerecord}" method="post">
+
+		<fieldset>
+			<div>
+				Id:
+				<p th:text="*{id}">Id</p>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div>
+				Customer Name:
+				<p th:text="*{customerName}">Customer Name</p>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div>
+				Car Id:
+				<p th:text="*{carId}">Customer Name</p>
+			</div>
+		</fieldset>
+		<br />
+
+		<fieldset>
+			<table>
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item, itemStat : *{usageOfTheCustomer}">
+						<td th:if="${not #lists.isEmpty(usageOfTheCustomer)}"><input
+							type="hidden"
+							th:field=" *{usageOfTheCustomer[__${itemStat.index}__].productId}"
+							th:value="${item.productId}">
+							<p th:text="${item.inventory.product.name}"></p>
+							<p
+								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].productId')}"
+								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].productId}"></p>
+						</td>
+
+						<td><input type="number"
+							th:field="*{usageOfTheCustomer[__${itemStat.index}__].quantity}">
+							<p
+								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].quantity')}"
+								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].quantity}"></p>
+						</td>
+
+						<td><input type="date"
+							th:field="*{usageOfTheCustomer[__${itemStat.index}__].registrationDate}" />
+							<p
+								th:if="${#fields.hasErrors('usageOfTheCustomer[__${itemStat.index}__].registrationDate')}"
+								th:errors="*{usageOfTheCustomer[__${itemStat.index}__].registrationDate}"></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+
+		<table>
+			<tr>
+				<td><a th:href="@{/catalogue/showcustomer/}+${stockUsage.id}">
+						<button>Back to Customer Detail</button>
+				</a> <a th:href="@{/catalogue/addusageform/}+${stockUsage.id}">
+						<button>Add New Part</button>
+				</a></td>
+			</tr>
+		</table>
+		
+		
+		<!-- 				<td><a href="DeleteProduct.html"
+				th:href="@{/catalogue/delete/}+${obj.productId}"
+				th:utext="#{products.page.delete}"> Delete </a></td> -->
+		<fieldset>
+			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+				type="reset" value="Reset" />
+		</fieldset>
+	</form>
+
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>

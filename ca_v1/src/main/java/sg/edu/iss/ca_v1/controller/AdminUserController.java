@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 
 import sg.edu.iss.ca_v1.model.User;
 import sg.edu.iss.ca_v1.service.AdminUserImplementation;
@@ -43,12 +43,17 @@ public class AdminUserController {
  	@RequestMapping(value="/list")
 	public String listusers(Model model) {
  		
- 		return listByPage(model, 1);
+ 		return listByPage(model, 1,"id","name","username","role","asc");
 	}
  	
  	@GetMapping("/page/{pageNumber}")
-	public String listByPage(Model model,@PathVariable("pageNumber") int currentPage) {
- 		Page<User> page=adminservice.findAll(currentPage);
+	public String listByPage(Model model,@PathVariable("pageNumber") int currentPage,
+			@Param("sortField")String sortField,
+			@Param("sortField")String sortField1,
+			@Param("sortField")String sortField2,
+			@Param("sortField")String sortField3,
+			@Param("sortDir") String sortDir) {
+ 		Page<User> page=adminservice.findAll(currentPage,sortField,sortDir);
  		
  		long total=page.getTotalElements();
  		int totalPages=page.getTotalPages();
@@ -59,7 +64,13 @@ public class AdminUserController {
  		model.addAttribute("total",total);
  		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("list", list);
-		model.addAttribute("users", adminservice.findAll(currentPage));
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		
+		String reverseSortDir=sortDir.equals("asc")?"desc":"asc";
+		model.addAttribute("reverseSortDir", reverseSortDir);
+		
+		model.addAttribute("users", adminservice.findAll(currentPage,sortField,sortDir));
 		
 		return "users";
  	}

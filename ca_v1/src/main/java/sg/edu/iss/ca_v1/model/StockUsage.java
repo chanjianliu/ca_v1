@@ -1,7 +1,9 @@
 package sg.edu.iss.ca_v1.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,40 +12,64 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class StockUsage {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	private int carId;
-	@OneToMany (mappedBy = "stockUsage")
-	private List<StockUsageInventory> stockUsageInventory;
 
-	public StockUsage(int carId) {
-		super();
-		this.carId = carId;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(nullable = false)
+    private int carId;
+    @Column(nullable = false)
+    private String customerName;
+    @OneToMany(mappedBy = "stockUsage")
+    private List<StockUsageInventory> usageOfTheCustomer = new ArrayList<StockUsageInventory>();
 
-	public StockUsage() {
-		super();
-	}
+    public StockUsage() {
+        super();
+    }
 
-	public int getId() {
-		return id;
-	}
-	
-	public int getCarId() {
-		return carId;
-	}
+    public StockUsage(String customerName) {
+        super();
+        this.customerName = customerName;
+    }
 
-	public void setCarId(int carId) {
-		this.carId = carId;
-	}
-	
-	public List<StockUsageInventory> getStockUsageInventory() {
-		return stockUsageInventory;
-	}
+    public StockUsage(int carId) {
+        super();
+        this.carId = carId;
+    }
 
-	public void setStockUsageInventory(List<StockUsageInventory> stockUsageInventory) {
-		this.stockUsageInventory = stockUsageInventory;
-	}
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void addStockUsageInventory(StockUsageInventory item) {
+        this.usageOfTheCustomer.add(item);
+    }
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public List<StockUsageInventory> getUsageOfTheCustomer() {
+        return usageOfTheCustomer;
+    }
+
+    public void setUsageOfTheCustomer(List<StockUsageInventory> usageOfTheCustomer) {
+        this.usageOfTheCustomer = usageOfTheCustomer;
+    }
 }

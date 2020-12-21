@@ -15,7 +15,9 @@ public interface SupplierInterface {
 	 public Supplier findSupplierById(Integer id);
 	 public void deleteSupplier(Supplier supplier);
 //	 public ArrayList<String> findAllSupplierNames();
-	 public Page<Supplier> listAllSuppliers(int pageNumber);
+//	 public Page<Supplier> listAllSuppliers(int pageNumber);
+	 public Page<Supplier> listAllSuppliers(int pageNumber,String sortField,String sortDir);
+	 
 	 
 }
 

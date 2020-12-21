@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Product  {
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,15 +31,12 @@ public class Product  {
 	private int minReorderQuantity; // minimum reorder quantity
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Supplier supplier;
-	
-	@OneToOne
-	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Inventory inventory;
 	
 	public Product() {
 		super();
 	}
-
 	public Product(String name, String brand, LocalDate dom, String colour, double oriPrice, double wholesalePrice,
 			double retailPrice, double partnerPrice, String description, String dimension, String category,
 			int reorderLevel, int minReorderQuantity, Supplier supplier, Inventory inventory) {
@@ -185,5 +181,45 @@ public class Product  {
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
 	}
-
+	public int CalculateOrdQty(int Qty,int ReOrderQty,int MinOrdQty)
+	{
+		
+		if(Qty < ReOrderQty)
+		{
+			if((ReOrderQty - Qty) < MinOrdQty)
+			{
+				return MinOrdQty;
+			}
+			else
+			{
+				return (ReOrderQty - Qty);
+			}
+		}
+		else return 0;
+	}
+	public double CalculatePrice(int OrdQty,double oriPrice)
+	{
+		return Math.round(OrdQty*oriPrice * 100.0) / 100.0;		
+	}
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", qty=" + inventory.getQuantity() 
+				+ "Unit.Price=" + oriPrice + ", ReorderQty=" + reorderLevel
+				+ ", Min.ord.qty=" + minReorderQuantity + ", Ord.Qty=" + CalculateOrdQty(inventory.getQuantity(),reorderLevel,minReorderQuantity) 
+				+ ",Price = "+CalculatePrice(CalculateOrdQty(inventory.getQuantity(),reorderLevel,minReorderQuantity),oriPrice) +" ]";
+	}
+	
+	public String toString1() {
+		return " id " + " qty " + " Unit.Price " + " Reorder qty " + " Min.ord.qty " + " Ord.Qty " 
+				+ " Price ";
+	}
+	public String toString2() {
+		return " " + id + "   " + inventory.getQuantity() + "    " + oriPrice + "        " + reorderLevel + "           " + minReorderQuantity +
+				"            " + CalculateOrdQty(inventory.getQuantity(),reorderLevel,minReorderQuantity) 
+				+ "       "+CalculatePrice(CalculateOrdQty(inventory.getQuantity(),reorderLevel,minReorderQuantity),oriPrice);
+	}
+	public double getPrice()
+	{
+		return CalculatePrice(CalculateOrdQty(inventory.getQuantity(),reorderLevel,minReorderQuantity),oriPrice);
+	}
 }

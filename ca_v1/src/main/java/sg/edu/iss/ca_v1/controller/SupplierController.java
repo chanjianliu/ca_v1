@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,12 +35,14 @@ public class SupplierController {
 	@RequestMapping(value="/list")
 	public String listusers(Model model) {
  		
- 		return listByPage(model, 1);
+		return listByPage(model, 1,"name","asc");
 	}
 	
 	@GetMapping("/page/{pageNumber}")
-	public String listByPage(Model model,@PathVariable("pageNumber") int currentPage) {
- 		Page<Supplier> page=sservice.listAllSuppliers(currentPage);
+	public String listByPage(Model model,@PathVariable("pageNumber") int currentPage,
+			@Param("sortField")String sortField,
+			@Param("sortDir") String sortDir) {
+ 		Page<Supplier> page=sservice.listAllSuppliers(currentPage,sortField,sortDir);
  		
  		long total=page.getTotalElements();
  		int totalPages=page.getTotalPages();
@@ -50,7 +53,14 @@ public class SupplierController {
  		model.addAttribute("total",total);
  		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("list", list);
-		model.addAttribute("supplierlist", sservice.listAllSuppliers(currentPage));
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		
+		String reverseSortDir=sortDir.equals("asc")?"desc":"asc";
+		model.addAttribute("reverseSortDir", reverseSortDir);
+		
+		model.addAttribute("supplierlist", sservice.listAllSuppliers(currentPage,sortField,sortDir));
 		
 		return "supplierlist";
  	}

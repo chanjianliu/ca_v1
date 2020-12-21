@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Member Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+	<h2>New User</h2>
+
+	<!-- 	<div th:if="${error != null}"><h3 th:text="${error}"></h3></div> -->
+
+	<form action="#" th:object="${stockUsage}"
+		th:action="@{/catalogue/savecustomer}" method="post">
+		<fieldset>
+			<input type="hidden" th:field="*{id}">
+		</fieldset>
+		<fieldset>
+			Customer Name <input type="text" th:field="*{customerName}">
+			<p th:if="${#fields.hasErrors('customerName')}"
+				th:errors="*{customerName}"></p>
+		</fieldset>
+		<fieldset>
+			Car Id <input type="text" th:field="*{carId}">
+			<p th:if="${#fields.hasErrors('carId')}" th:errors="*{carId}"></p>
+		</fieldset>
+		<fieldset>
+			<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+				type="reset" value="Reset" />
+		</fieldset>
+	</form>
+
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<header th:insert="layout/layout.html :: header"></header>
+	<div th:replace="layout/layout.html :: menu"></div>
+
+	<h1>Product Form</h1>
+	
+	<form action="#" th:object="${product}" th:action = "@{/product/save}" method = "post">
+		<table>
+		<tr>
+			<th >Product Id</th>
+			<th >Name</th>
+			<th >Brand</th>
+			<th >DOM</th>
+			<th >Color</th>
+			<th >Original Price</th>
+			<th >Whole Sale Price</th>
+			<th >Retail Price</th>
+			<th >Partner Price</th>
+			<th >Description</th>
+			<th >Dimension</th>
+			<th >Category</th>
+			<th >Reorder Level</th>
+			<th >minReorder Quantity</th>
+<!-- 			<th >SupplierId</th> -->
+<!-- 			<th >InventoryId</th> -->
+		</tr>
+		<tr class="table-row">
+			<td>Auto-Generated Id<input type="hidden" th:field="*{id}"></td>
+			<td><input type="text" th:field="*{name}"></td>
+			<td><input type="text" th:field="*{brand}"></td>
+			<td><input type="text" th:field="*{dom}" placeholder="yyyy-MM-dd" th:text = "${#dates.format(product.dom, 'yyyy-MM-dd')}"/></td>
+			<td><input type="text" th:field="*{colour}"></td>
+			<td><input type="text" th:field="*{oriPrice}"></td>
+			<td><input type="text" th:field="*{wholesalePrice}"></td>
+			<td><input type="text" th:field="*{retailPrice}"></td>
+			<td><input type="text" th:field="*{partnerPrice}"></td>
+			<td><input type="text" th:field="*{description}"></td>
+			<td><input type="text" th:field="*{dimension}"></td>
+			<td><input type="text" th:field="*{category}"></td>
+			<td><input type="text" th:field="*{reorderLevel}"></td>
+			<td><input type="text" th:field="*{minReorderQuantity}"></td>
+<!-- 			<td><input type="text" th:field="*{supplier.name}"></td> -->
+<!-- 			<td><input type="text" th:field="*{inventory.id}"></td> -->
+
+		</tr>
+	</table>
+	<p>
+		<input type="submit" value="Save" /> &nbsp; &nbsp; 
+		<input type="reset" value="Reset" />
+	</p>
+	
+	
+	
+	
+	</form>
+	<br />
+	<div th:replace="layout/layout.html :: footer"></div>
+</body>
+</html>
