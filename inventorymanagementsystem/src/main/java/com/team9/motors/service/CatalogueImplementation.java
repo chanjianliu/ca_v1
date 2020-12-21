@@ -13,6 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -175,5 +180,57 @@ public class CatalogueImplementation implements CatalogueInterface {
     public StockUsageInventory findUsageById(int id) {
         return sirepo.findById(id).get();
     }
+    
+    @Override
+	@Transactional
+	public void usageReport(LocalDate startDate, LocalDate endDate) {
+		BufferedWriter bw = null;
+		try {
+			List<StockUsageInventory> mycontent = sirepo.findByRegistrationDateBetween(startDate, endDate);
+			if (mycontent.size() == 0) {
+				return;
+			}
+			File file = new File("C:\\Users\\cjlsp\\usagereport.dat");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file);
+
+			bw = new BufferedWriter(fw);
+			bw.write("\t\t\t\tInventory Reorder Report from : " + startDate + " to " + endDate);
+			bw.newLine();
+			bw.write("\t\t\t\t-------------------------------------------------------------");
+			bw.newLine();
+			bw.write("=========================================================================================");
+
+			bw.newLine();
+
+			for (StockUsageInventory p : mycontent) {
+				//if (mycontent.get(0) == p) {
+					bw.newLine();
+					bw.write(p.toString());
+					bw.newLine();
+				//}
+
+			}
+			bw.newLine();
+			bw.write("=========================================================================================");
+			bw.newLine();
+			bw.write("=========================================================================================");
+			bw.newLine();
+			bw.write("End Of Report");
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (bw != null)
+					bw.close();
+			} catch (Exception ex) {
+				System.out.println("Error in closing the BufferedWriter" + ex);
+			}
+		}
+	}
 }
 

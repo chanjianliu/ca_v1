@@ -34,4 +34,6 @@ public interface CatalogueInterface {
     public StockUsageInventory findUsageById(int id);
     public List<StockUsage> listAllStockUsages();
     public StockUsage findCustomerById(int id);
+    
+    public void usageReport(LocalDate startDate, LocalDate endDate);
 }

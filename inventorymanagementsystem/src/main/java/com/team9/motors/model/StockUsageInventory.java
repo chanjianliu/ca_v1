@@ -88,4 +88,10 @@ public class StockUsageInventory {
         this.registrationDate = registrationDate;
     }
 
+	@Override
+	public String toString() {
+		return "StockUsageInventory [Product Id = " + inventory.getId() + ", Customer Name = " + stockUsage.getCustomerName() + 
+				", Customer CarId = " + stockUsage.getCarId() + ", Product Name = " + inventory.getProduct().getName() + ", Quantity =" + quantity
+				+ ", Registration Date=" + registrationDate + "]";
+	}
 }

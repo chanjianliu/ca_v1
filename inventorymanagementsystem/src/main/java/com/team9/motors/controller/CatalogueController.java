@@ -223,18 +223,25 @@ public class CatalogueController {
     }
 
     @RequestMapping(value = "/stockusgeinventorybydaterange")
-    public String showRecordByDateRange(@ModelAttribute("dates")@Valid DateSelector dates, Model model) {
+    public String showRecordByDateRange(@ModelAttribute("dates")@Valid DateSelector dates, ModelMap model) {
         LocalDate start = LocalDate.parse(dates.getStartDate());
         LocalDate end = LocalDate.parse(dates.getEndDate());
 
         List<StockUsageInventory> recordsByDateRange = cservice.findStockUsageInventoryByRegistrationDateBetween(start, end);
         model.addAttribute("recordsByDateRange",recordsByDateRange);
-
+        model.addAttribute("dates", dates);
         return "recordsbydates";
     }
 
-
-
+	@RequestMapping(value="/usagereport")
+	public String reportbyId(@ModelAttribute("dates")@Valid DateSelector dates, ModelMap model) {
+//		model.addAttribute("reorder", pservice.reorderReport(id));
+//		model.addAttribute(pservice.reorderReport(id));
+		LocalDate start = LocalDate.parse(dates.getStartDate());
+		LocalDate end = LocalDate.parse(dates.getEndDate());
+		cservice.usageReport(start, end);
+		return  "reordermsg";
+	}
 
 
 
