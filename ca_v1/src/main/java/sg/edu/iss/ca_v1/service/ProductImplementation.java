@@ -57,4 +57,10 @@ public class ProductImplementation implements ProductInterface {
 		return names;
 
 	}
+	
+	@Override
+	@Transactional
+	public List<Product> findBySupplierId(int id) {
+		return prepo.findBySupplierId(id);
+	}
 }

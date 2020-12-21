@@ -10,4 +10,5 @@ public interface ProductInterface {
 	public Product findProductById(Integer id);
 	public void deleteProduct(Product product);
 	public List<String> findAllProductNames();
+	public List<Product> findBySupplierId(int id);
 }

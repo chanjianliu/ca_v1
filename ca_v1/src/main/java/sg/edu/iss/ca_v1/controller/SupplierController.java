@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import sg.edu.iss.ca_v1.model.Inventory;
 import sg.edu.iss.ca_v1.model.Product;
+import sg.edu.iss.ca_v1.model.StockUsageInventory;
 import sg.edu.iss.ca_v1.model.Supplier;
 import sg.edu.iss.ca_v1.repo.SupplierRepository;
 import sg.edu.iss.ca_v1.service.InventoryImplementation;
 import sg.edu.iss.ca_v1.service.InventoryInterface;
 import sg.edu.iss.ca_v1.service.ProductImplementation;
 import sg.edu.iss.ca_v1.service.ProductInterface;
+import sg.edu.iss.ca_v1.service.StockUsageInventoryImplementation;
+import sg.edu.iss.ca_v1.service.StockUsageInventoryInterface;
 import sg.edu.iss.ca_v1.service.SupplierImplementation;
 import sg.edu.iss.ca_v1.service.SupplierInterface;
 
@@ -55,6 +58,14 @@ public class SupplierController {
 	@Autowired
 	public void setInventoryService(InventoryImplementation iserviceImpl) {
 		this.iservice = iserviceImpl;
+	}
+	
+	@Autowired
+	private StockUsageInventoryInterface suiservice;
+	
+	@Autowired
+	public void setStockUsageInventoryService(StockUsageInventoryImplementation suiserviceImpl) {
+		this.suiservice = suiserviceImpl;
 	}
 	
 //	//old supplier list page w/o pagination
@@ -90,8 +101,9 @@ public class SupplierController {
 //	}
 
 	@RequestMapping(value = "/detail/{id}")
-	public String showSupplier(@PathVariable("id") Integer id, Model model) {
+	public String showSupplier(@PathVariable("id") Integer id, ModelMap model) {
 		model.addAttribute("supplier", sservice.findSupplierById(id));
+		model.addAttribute("products", pservice.findBySupplierId(id));
 		return "showsupplier";
 	}
 
@@ -123,6 +135,12 @@ public class SupplierController {
 		List<Product> supplierProducts = supplier.getProductList();
 		for (Product p : supplierProducts) {
 			Inventory productInventory = p.getInventory();
+			
+			List<StockUsageInventory> inventoryRecords = productInventory.getStockUsageInventory();
+			for (StockUsageInventory record : inventoryRecords) {
+				suiservice.deleteStockUsageInventory(record);
+			}
+			
 			iservice.deleteInventory(productInventory);
 			pservice.deleteProduct(p);
 		}
