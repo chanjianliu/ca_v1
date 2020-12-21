@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
@@ -14,20 +14,26 @@
 <div th:replace="layout/loglayout.html :: menu"></div>
 
 
+
 <h4 th:utext="'Hello, '+${session.usession.name}">Hello</h4>
 <h4 th:utext="'Role: '+${session.usession.role}">Role</h4>
 
 <table>
 <tr>
-	<td><a th:href="@{/product/list}"><button>Product</button></a></td>
-	<td><a th:href="@{/catalogue/customers}"><button>Customers</button></a></td>
-	<td><a th:href="@{/catalogue/listrecord}"><button>Stock Usage List</button></a></td>
-	<td><a th:href="@{/supplier/page/1}"><button>Suppliers</button></a></td>
-	<td><a th:href="@{/user/page/1}"><button>Users</button></a></td>
+
+	<td th:if="${session.usession.role eq 'ADMIN'}">
+     <td th:if="${session.usession.role == 'ADMIN'}">
+	<td th:if="${session.usession.role.equals('ADMIN')}"> 
+	
+	<a  th:href="@{/catalogue/list}"><button>Catalogue</button></a>
+	<a th:href="@{/catalogue/customers}"><button>Customers</button></a>
+	<a th:href="@{/catalogue/listrecord}"><button>Stock Usage List</button></a>
 <!-- 	<td><a th:href="@{/catalogue/list}"><button>Suppliers</button></a></td> -->
+	</td>
 </tr>
 
 </table>
+
 
 <div th:replace="layout/loglayout.html :: footer"></div>
 </body>
