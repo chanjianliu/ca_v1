@@ -12,6 +12,8 @@ public class Inventory {
     private ProductState productState;
     @Column(nullable = false)
     private int quantity;
+    
+    private int damagedQuantity;
 
     @OneToOne(mappedBy = "inventory")
     private Product product;
@@ -29,6 +31,15 @@ public class Inventory {
         this.productState = productState;
         this.quantity = quantity;
         this.product = product;
+    }
+    
+    public Inventory(int shelfLocation, ProductState productState, int quantity, Product product, int damagedQuantity) {
+        super();
+        this.shelfLocation = shelfLocation;
+        this.productState = productState;
+        this.quantity = quantity;
+        this.product = product;
+        this.damagedQuantity = damagedQuantity;
     }
 
     public List<StockUsageInventory> getStockUsageInventory() {
@@ -73,4 +84,14 @@ public class Inventory {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+	public int getDamagedQuantity() {
+		return damagedQuantity;
+	}
+
+	public void setDamagedQuantity(int damagedQuantity) {
+		this.damagedQuantity = damagedQuantity;
+	}
+    
+    
 }

@@ -170,6 +170,12 @@ public class CatalogueController {
                                        @PathVariable("id") Integer id) {
         Inventory inv= cservice.findPartById(id);
         inv.setProductState(inventory.getProductState());
+        
+        //add back current damaged quantity - newly total damaged quantity
+        inv.setQuantity(inv.getQuantity() + inv.getDamagedQuantity() - inventory.getDamagedQuantity());
+        //report damagedQuantity
+        inv.setDamagedQuantity(inventory.getDamagedQuantity());
+        
         cservice.saveInventory(inv);
         return "forward:/all/catalogue/showinventory/" + inventory.getId();
     }

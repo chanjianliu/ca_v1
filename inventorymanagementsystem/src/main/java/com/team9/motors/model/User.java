@@ -17,6 +17,8 @@ public class User {
     @Column (unique=true, nullable = false)
     @NotEmpty(message="Please provide your address")
     private String username;
+    @Column(unique=true, nullable=false)
+    private String mailAddress;
     @NotEmpty
     @Length(min = 8, message="Please provide a password with at least 8 characters")
     private String password;
@@ -82,8 +84,16 @@ public class User {
     public void setRole(com.team9.motors.model.Role role) {
         Role = role;
     }
+    
+    public String getMailAddress() {
+		return mailAddress;
+	}
 
-    @Override
+	public void setMailAddress(String mailAddress) {
+		this.mailAddress = mailAddress;
+	}
+
+	@Override
     public String toString() {
         return "User{" +
                 "id=" + id +
