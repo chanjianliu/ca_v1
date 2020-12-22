@@ -21,7 +21,7 @@ public class User {
 	@NotEmpty
 	@Length(min = 8, message = "Please provide a password with at least 8 characters")
 	private String password;
-	private Role Role;
+	private Role role;
 	@Email
 	private String email;
 
@@ -33,7 +33,7 @@ public class User {
 		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
-		this.Role = role;
+		this.role = role;
 		this.email = email;
 	}
 
@@ -79,11 +79,11 @@ public class User {
 	}
 
 	public Role getRole() {
-		return Role;
+		return role;
 	}
 
 	public void setRole(Role role) {
-		Role = role;
+		this.role = role;
 	}
 
 	public String getEmail() {
@@ -97,6 +97,6 @@ public class User {
 	@Override
 	public String toString() {
 		return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
-				+ ", username='" + username + '\'' + ", password='" + password + '\'' + ", Role=" + Role + '}';
+				+ ", username='" + username + '\'' + ", password='" + password + '\'' + ", Role=" + role + '}';
 	}
 }

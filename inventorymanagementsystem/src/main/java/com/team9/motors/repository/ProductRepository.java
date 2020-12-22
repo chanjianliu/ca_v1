@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("Select p from Product as p where p.name like CONCAT('%',:k,'%') ")
     public ArrayList<Product> SearchProductByName(@Param("k") String keyword);
-
+    
     @Query("Select p from Product as p where p.brand like CONCAT('%',:k,'%') ")
     public ArrayList<Product> SearchProductByBrand(@Param("k") String keyword);
 
@@ -39,4 +39,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("Select p from Product p where p.supplier.id = :id")
     public List<Product> reorderReport(int id);
+    
+//    @Query("Select p from Product p ")
+//    public List<Product> findProductsByProductState();
+    
+    
+    
+    
 }

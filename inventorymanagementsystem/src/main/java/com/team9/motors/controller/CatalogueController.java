@@ -134,8 +134,8 @@ public class CatalogueController {
             dbItem.setQuantity(dbItem.getQuantity() + dbRecord.getQuantity() - record.getQuantity());
 
             cservice.saveStockUsageInventory(record); 
+            JavaMailUtil.changeProductState(dbItem);
         }
-        JavaMailUtil.sendEmail();
         return "forward:/all/catalogue/showcustomer/" + customer.getId();
     }
 

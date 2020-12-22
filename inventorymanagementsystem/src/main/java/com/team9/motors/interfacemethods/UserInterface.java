@@ -8,6 +8,7 @@ public interface UserInterface {
     public void createUser(User user);
     public User findById(Integer id);
     public void deleteUser(User user);
-    public Page<User> findAll(int pageNumber) ;
+    public Page<User> findAll(int pageNumber);
+    public String[] findAdminEmail();
 
 }

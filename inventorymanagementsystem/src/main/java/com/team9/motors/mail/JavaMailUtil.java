@@ -1,12 +1,24 @@
 package com.team9.motors.mail;
 
+import java.util.List;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.team9.motors.model.Inventory;
+import com.team9.motors.model.ProductState;
+import com.team9.motors.model.Role;
+import com.team9.motors.model.User;
+import com.team9.motors.repository.UserRepository;
+
 public class JavaMailUtil {
-	public static void sendEmail() {
+
+	@Autowired
+	private static UserRepository urepo;
+
+	public static void sendEmail(Inventory inventory) {
 		// Create a mail sender gmail
 		JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 		javaMailSender.setHost("smtp.gmail.com");
@@ -19,15 +31,20 @@ public class JavaMailUtil {
 		properties.setProperty("mail.smtp.starttls.enable", "true");
 		javaMailSender.setJavaMailProperties(properties);
 		// Set the email address we want to send to
-		String[] mailAddressList = { "zhuhaokun2@gmail.com", "e0641594@u.nus.edu" };
+		String[] mailAddressList = findAdminEmail();
 		// Create an SimpleMailMessage
 		SimpleMailMessage smm = new SimpleMailMessage();
 		smm.setFrom("Management System");
 		smm.setTo(mailAddressList);
 		smm.setSubject("Product Reorder Reminder");
-		smm.setText("This is a massage from system" + "The number of product [Water] goes down to [0]"
-				+ "Please reoder the products soon");
-
+		String mailText = "This is a massage from system. \n The number of product ["
+		+inventory.getProduct().getName()
+		+"] goes down to ["
+		+inventory.getQuantity()
+		+"]. The Supplier is ["
+		+inventory.getProduct().getSupplier().getName()
+		+"]. \nPlease reoder the products soon";
+		smm.setText(mailText);
 		try {
 			javaMailSender.send(smm);
 			System.out.println("Sended successfully");
@@ -36,6 +53,34 @@ public class JavaMailUtil {
 			System.out.println("Send failure");
 		}
 
+	}
+
+	public static void changeProductState(Inventory inventory) {
+
+		if (inventory.getQuantity() <= inventory.getProduct().getReorderLevel()
+				&& inventory.getProductState() == ProductState.InStock) {
+			sendEmail(inventory);
+			inventory.setProductState(ProductState.BelowReorderLevel);
+		}
+//		else if (inventory.getQuantity() <= inventory.getProduct().getReorderLevel()
+//				&& inventory.getProductState() == ProductState.BelowReorderLevel) {
+//			// do nothing
+//		} else if (inventory.getQuantity() <= inventory.getProduct().getReorderLevel()
+//				&& inventory.getProductState() == ProductState.ReorderPlaced) {
+//			// inventory.setProductState(ProductState.InStock);
+//		}
+	}
+	
+	public static String[] findAdminEmail() {
+		List<User> ulist  = urepo.findUsersByRole(Role.ADMIN);
+		String[] mailList = new String[ulist.size()];
+		
+		int counter = 0;
+		for (User user : ulist) {
+			mailList[counter] = user.getEmail();
+			counter++;
+		}
+		return mailList;
 	}
 
 }

@@ -34,7 +34,7 @@ public class UserImplementation implements UserInterface {
 
    //Delete User
    @Transactional
-   public void deleteUser(User user){ userRepository.delete(user);}
+   public void deleteUser(User user){userRepository.delete(user);}
 
    //Find by UserID
    @Transactional
@@ -54,4 +54,11 @@ public class UserImplementation implements UserInterface {
       Pageable pageable=PageRequest.of(pageNumber - 1, 5);
       return  userRepository.findAll(pageable);
    }
+
+
+	@Override
+	public String[] findAdminEmail() {
+		//userRepository.
+		return null;
+		}
 }
