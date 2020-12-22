@@ -110,7 +110,8 @@
                     <div class="col-md-4" style="">
                         <fieldset>
                             <label for="validationDefault04" class="form-label"> Password </label>
-                            <input type="password" th:field="*{password}" class="form-control" id="validationDefault04" placeholder="Enter Password" required>
+                            <input type="hidden" th:field="*{password}" class="form-control" id="validationDefault04" placeholder="Enter Password" required>
+                            ********
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </fieldset>
                     </div>
@@ -121,6 +122,21 @@
 
             </tr>
 
+            <tr>
+                <td>
+                    <div class="col-md-4" style="">
+                        <fieldset>
+                            <label class="form-label"> Email </label>
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="Enter Email" required>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                        </fieldset>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+
+            </tr>
 
             <tr>
                 <td>

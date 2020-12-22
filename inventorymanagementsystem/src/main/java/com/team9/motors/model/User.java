@@ -18,21 +18,21 @@ public class User {
     @NotEmpty(message="Please provide your address")
     private String username;
     @Column(unique=true, nullable=false)
-    private String mailAddress;
+    private String email;
     @NotEmpty
     @Length(min = 8, message="Please provide a password with at least 8 characters")
     private String password;
-    private Role Role;
+    private Role role;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String username, String password, com.team9.motors.model.Role role) {
+    public User(String firstName, String lastName, String username, String password, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        Role = role;
+        this.role = role;
     }
 
     public int getId() {
@@ -78,19 +78,19 @@ public class User {
     }
 
     public com.team9.motors.model.Role getRole() {
-        return Role;
+        return role;
     }
 
-    public void setRole(com.team9.motors.model.Role role) {
-        Role = role;
+    public void setRole(Role role) {
+        this.role = role;
     }
-    
-    public String getMailAddress() {
-		return mailAddress;
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMailAddress(String mailAddress) {
-		this.mailAddress = mailAddress;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", Role=" + Role +
+                ", Role=" + role +
                 '}';
     }
 }

@@ -94,4 +94,15 @@ public class StockUsageInventory {
 				", Customer CarId = " + stockUsage.getCarId() + ", Product Name = " + inventory.getProduct().getName() + ", Quantity =" + quantity
 				+ ", Registration Date=" + registrationDate + "]";
 	}
+	
+    public String toStringTitle() {
+        return "  Product Id\t\t" + "Product Name\t\t" + "Customer Name\t\t" + "Customer CarId\t" + "Quantity\t" 
+        		+ "Registration Date";
+    }
+    
+    public String toStringContent() {
+        return "\t\t" + inventory.getId() + "\t\t\t" + inventory.getProduct().getName() + "   \t\t" + stockUsage.getCustomerName() 
+        		+ "\t\t\t" + stockUsage.getCarId() + "\t\t\t" + quantity +
+                " \t\t\t" + registrationDate;
+    }
 }

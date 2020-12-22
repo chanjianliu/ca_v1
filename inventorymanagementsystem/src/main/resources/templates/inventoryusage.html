@@ -33,7 +33,7 @@
 	<!-- Menu -->
 	<nav id="menu">
 		<ul class="links">
-			<li><a href="/admin/dashboard">Admin Dashboard</a></li>
+			<li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/dashboard">Admin Dashboard</a></li>
 			<li><a href="/mechanic/dashboard">Mechanic Dashboard</a></li>
 			<!--can add more links to navigate here-->
 		</ul>
@@ -84,8 +84,8 @@
 		</tr>
 		<tr>
 
-			<td><a th:href="@{/all/catalogue/changeStatus/}+${item.id}">Update
-					Stock Status or report damage Quantity</a></td>
+			<td th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a th:href="@{/admin/changeStatus/}+${item.id}"><button>Update
+					Stock Status or Report Damage Quantity</button></a></td>
 		</tr>
 
 		<!--     <tr>

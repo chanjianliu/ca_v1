@@ -198,28 +198,33 @@ public class CatalogueImplementation implements CatalogueInterface {
 			FileWriter fw = new FileWriter(file);
 
 			bw = new BufferedWriter(fw);
-			bw.write("\t\t\t\tInventory Reorder Report from : " + startDate + " to " + endDate);
+			bw.write("\t\t\t\t\t\t\tInventory Reorder Report from : " + startDate + " to " + endDate);
 			bw.newLine();
-			bw.write("\t\t\t\t-------------------------------------------------------------");
+			bw.write("\t\t\t\t\t\t-------------------------------------------------------------");
 			bw.newLine();
-			bw.write("=========================================================================================");
-
+			bw.write("===============================================================================================================");
+			
 			bw.newLine();
 
 			for (StockUsageInventory p : mycontent) {
-				//if (mycontent.get(0) == p) {
+                if(mycontent.get(0) == p)
+                {
+                    bw.newLine();
+                    bw.write(p.toStringTitle());
+                    bw.newLine();
+                }
+                
 					bw.newLine();
-					bw.write(p.toString());
+					bw.write(p.toStringContent());
 					bw.newLine();
-				//}
 
 			}
 			bw.newLine();
-			bw.write("=========================================================================================");
+			bw.write("===============================================================================================================");
 			bw.newLine();
-			bw.write("=========================================================================================");
+			bw.write("===============================================================================================================");
 			bw.newLine();
-			bw.write("End Of Report");
+			bw.write("\t\t\t\t\t\t\t\t\t\t\tEnd Of Report");
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

@@ -4,14 +4,19 @@ import com.team9.motors.interfacemethods.InventoryInterface;
 import com.team9.motors.interfacemethods.ProductInterface;
 import com.team9.motors.interfacemethods.StockUsageInventoryInterface;
 import com.team9.motors.interfacemethods.SupplierInterface;
+import com.team9.motors.interfacemethods.UserInterface;
+import com.team9.motors.mail.JavaMailUtil;
 import com.team9.motors.model.Inventory;
 import com.team9.motors.model.Product;
+import com.team9.motors.model.ProductState;
 import com.team9.motors.model.StockUsageInventory;
 import com.team9.motors.model.Supplier;
 import com.team9.motors.service.InventoryImplementation;
 import com.team9.motors.service.ProductImplementation;
 import com.team9.motors.service.StockUsageInventoryImplementation;
 import com.team9.motors.service.SupplierImplementation;
+import com.team9.motors.service.UserImplementation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +30,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping(" ")
+@RequestMapping("")
 @SessionAttributes("userdetails")
 public class ProductController {
 
@@ -59,6 +64,14 @@ public class ProductController {
     @Autowired
     public void setStockUsageInventoryService(StockUsageInventoryImplementation suiserviceImpl) {
         this.suiservice = suiserviceImpl;
+    }
+    
+    @Autowired
+    private UserInterface uservice;
+
+    @Autowired
+    public void setStockUsageInventoryService(UserImplementation uimpl) {
+        this.uservice = uimpl;
     }
 
     @RequestMapping(value = "/all/product/list")
@@ -113,6 +126,7 @@ public class ProductController {
         return "product-form";
     }
 
+    //save an edited product record 
     @RequestMapping(value = "/admin/product/save")
     public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
                               Model model) {
@@ -136,6 +150,7 @@ public class ProductController {
         return "forward:/all/product/list";
     }
 
+    //method to save a newly created product
     @RequestMapping(value = "/admin/product/savenew")
     public String saveNewProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
                                  Model model) {
@@ -148,9 +163,10 @@ public class ProductController {
         product.setSupplier(supplier);
         pservice.saveProduct(product);
 
-        return "forward:/all/product/inventory/add/"+product.getId();
+        return "forward:/admin/product/inventory/add/"+product.getId();
     }
 
+    //method to delete a product and its inventory as well as the StockUsageInventory related to it
     @RequestMapping(value = "/admin/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id) {
         Product product = pservice.findProductById(id);
@@ -171,7 +187,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/all/product/inventory/add/{id}")
+    @RequestMapping(value = "/admin/product/inventory/add/{id}")
     public String addForm(@PathVariable("id") Integer id, ModelMap model) {
         Product product = pservice.findProductById(id);
         Inventory inventory = new Inventory();
@@ -255,6 +271,7 @@ public class ProductController {
         return "searchResult";
     }
 
+    
     @RequestMapping(value="/admin/product/report")
     public String supplier(Model model) {
         model.addAttribute("supplier", sservice.listAllSuppliers());
@@ -262,12 +279,46 @@ public class ProductController {
 
     }
 
+    //Generate a reorder report according to supplier
     @RequestMapping(value="/admin/product/reorderreport/{id}")
     public String reportbyId(@PathVariable("id") Integer id,Model model) {
         pservice.reorderReport(id);
         return  "reordermsg";
     }
 
+    
+    @RequestMapping(value = "/admin/changeStatus/{id}")
+    public String changeInventoryStatus(@PathVariable("id") Integer id, ModelMap model) {
+        Inventory inventory = iservice.findInventoryById(id);
+        model.addAttribute("inventoryToBeChanged", inventory);
+        //model.addAttribute("pStates", ProductState.values());
 
+        return "singleInventoryDetail";
+    }
+    
+    @RequestMapping(value = "/admin/saveupdatedinventory/{id}")
+    public String saveUpdatedInventory(@ModelAttribute("inventoryToBeChanged") Inventory inventory,
+                                       @PathVariable("id") Integer id) {
+        Inventory inv= iservice.findInventoryById(id);
+        inv.setProductState(inventory.getProductState());
+        
+        //add back current damaged quantity - newly total damaged quantity
+        inv.setQuantity(inv.getQuantity() + inv.getDamagedQuantity() - inventory.getDamagedQuantity());
+        //report damagedQuantity
+        inv.setDamagedQuantity(inventory.getDamagedQuantity());
+        
+        iservice.saveInventory(inv);
+        
+        //--- Mail ---
+        if (inv.getQuantity() <= inv.getProduct().getReorderLevel()
+				&& inv.getProductState() == ProductState.InStock) {
+        	inv.setProductState(ProductState.BelowReorderLevel);
+        	JavaMailUtil.sendEmail(inv, uservice.findAdminEmail());
+        	iservice.saveInventory(inv);
+        }
+        //--- Mail ---
+        
+        return "forward:/all/catalogue/showinventory/" + inventory.getId();
+    }
 
 }

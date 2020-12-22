@@ -26,7 +26,7 @@
 
 <nav id="menu">
 	<ul class="links">
-		<li><a href="/admin/dashboard" >Admin Dashboard</a></li>
+		<li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/dashboard" >Admin Dashboard</a></li>
 		<li><a href="/mechanic/dashboard">Mechanic Dashboard</a></li>
 		<!--can add more links to navigate here-->
 	</ul>
@@ -82,8 +82,8 @@
 		<th> Shelf Location</th>
 		<th> Quantity</th>
 		<th> Product State</th>
-		<th >Edit Product</th>
-		<th >Delete Product</th>
+		<th th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">Edit Product</th>
+		<th th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">Delete Product</th>
 
 	</tr>
 	<tr th:each="product:${products}" class="table-row">
@@ -106,15 +106,15 @@
 		<td th:text="${product.inventory.quantity}">Quantity</td>
 		<td th:if="${product.minReorderQuantity < product.inventory.quantity}">In stock</td>
 		<td th:if="${product.minReorderQuantity >= product.inventory.quantity}">Below Reorder Level</td>
-		<td><a href="EditProduct.html"
+		<td th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="EditProduct.html"
 			   th:href="@{/admin/product/edit/}+${product.id}">Edit</a></td>
-		<td><a href="DeleteProduct.html"
+		<td th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="DeleteProduct.html"
 			   th:href="@{/admin/product/delete/}+${product.id}">Delete</a></td>
 	</tr>
 </table>
 
 
-
+<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}" align="left"><a th:href="@{/admin/product/add}"><button>Add New Product</button></a></div>
 
 
 <!-- Scripts -->

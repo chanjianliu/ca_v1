@@ -29,7 +29,7 @@
 		<li><a href="/all/catalogue/addcustomer">Register New Customer</a></li>
 	</ul>
 	<ul class="links">
-		<li><a href="/admin/dashboard" >Admin Dashboard</a></li>
+		<li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/dashboard" >Admin Dashboard</a></li>
 		<li><a href="/mechanic/dashboard" >Mechanic Dashboard</a></li>
 		<!--can add more links to navigate here-->
 	</ul>
@@ -60,7 +60,7 @@
 			<td th:text=${customer.carId}>Car Id</td>
 		</tr>
 	</table>
-
+	<div align="left"><a href="/all/catalogue/addcustomer"><button>Register New Customer</button></a></div>
 
 <!-- Scripts -->
 <script src="/js/jquery.min.js"></script>

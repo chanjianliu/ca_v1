@@ -121,7 +121,20 @@
 
     </tr>
 
-
+	<tr>
+	
+	</tr>
+	   <tr>
+        <td>
+            <div class="col-md-4" style="">
+                <fieldset>
+       <label class="form-label"> Email </label>
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Enter Email" required>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </fieldset>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td>
             <div class="col-md-4" style="">

@@ -6,10 +6,16 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.team9.motors.interfacemethods.CatalogueInterface;
+import com.team9.motors.interfacemethods.UserInterface;
+import com.team9.motors.mail.JavaMailUtil;
 import com.team9.motors.model.DateSelector;
 import com.team9.motors.model.Inventory;
+import com.team9.motors.model.ProductState;
 import com.team9.motors.model.StockUsage;
 import com.team9.motors.model.StockUsageInventory;
+import com.team9.motors.service.CatalogueImplementation;
+import com.team9.motors.service.UserImplementation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +34,16 @@ public class CatalogueController {
     private CatalogueInterface cservice;
 
     @Autowired
-    public void setCatalogue(CatalogueInterface catalogue) {
+    public void setCatalogue(CatalogueImplementation catalogue) {
         this.cservice = catalogue;
+    }
+    
+    @Autowired
+	private UserInterface uservice;
+    
+    @Autowired
+    public void setCatalogue(UserImplementation uimpl) {
+        this.uservice = uimpl;
     }
 
     //add customer
@@ -99,16 +113,25 @@ public class CatalogueController {
         // add record into customer record List
         customer.addStockUsageInventory(usage);
         // find Inventory object with the inventory id retrieved above
-        Inventory item = cservice.findPartById(usage.getProductId());
+        Inventory dbItem = cservice.findPartById(usage.getProductId());
         // save the item into the record
-        usage.setInventory(item);
+        usage.setInventory(dbItem);
         usage.setStockUsage(customer);
 
         //deducting quantity from inventory
-        item.setQuantity(item.getQuantity() - usage.getQuantity());
+        dbItem.setQuantity(dbItem.getQuantity() - usage.getQuantity());
 
         cservice.saveStockUsageInventory(usage);
 
+        //--- Mail ---
+        if (dbItem.getQuantity() <= dbItem.getProduct().getReorderLevel()
+				&& dbItem.getProductState() == ProductState.InStock) {
+        	dbItem.setProductState(ProductState.BelowReorderLevel);
+        	JavaMailUtil.sendEmail(dbItem, uservice.findAdminEmail());
+        	cservice.saveInventory(dbItem);
+        }
+        //--- Mail ---
+        
         return "forward:/all/catalogue/showcustomer/" + customer.getId();
     }
 
@@ -127,7 +150,17 @@ public class CatalogueController {
             dbItem.setQuantity(dbItem.getQuantity() + dbRecord.getQuantity() - record.getQuantity());
 
             cservice.saveStockUsageInventory(record);
+            
+            //--- Mail ---
+            if (dbItem.getQuantity() <= dbItem.getProduct().getReorderLevel()
+    				&& dbItem.getProductState() == ProductState.InStock) {
+            	dbItem.setProductState(ProductState.BelowReorderLevel);
+            	JavaMailUtil.sendEmail(dbItem, uservice.findAdminEmail());
+            	cservice.saveInventory(dbItem);
+            }
+            //--- Mail ---
         }
+        
         return "forward:/all/catalogue/showcustomer/" + customer.getId();
     }
 
@@ -156,32 +189,6 @@ public class CatalogueController {
 
         return "inventoryusage";
     }
-
-    @RequestMapping(value = "/changeStatus/{id}")
-    public String changeInventoryStatus(@PathVariable("id") Integer id, ModelMap model) {
-        Inventory inventory = cservice.findPartById(id);
-        model.addAttribute("inventoryToBeChanged", inventory);
-        //model.addAttribute("pStates", ProductState.values());
-
-        return "singleInventoryDetail";
-    }
-    @RequestMapping(value = "/saveupdatedinventory/{id}")
-    public String saveUpdatedInventory(@ModelAttribute("inventoryToBeChanged") Inventory inventory,
-                                       @PathVariable("id") Integer id) {
-        Inventory inv= cservice.findPartById(id);
-        inv.setProductState(inventory.getProductState());
-        
-        //add back current damaged quantity - newly total damaged quantity
-        inv.setQuantity(inv.getQuantity() + inv.getDamagedQuantity() - inventory.getDamagedQuantity());
-        //report damagedQuantity
-        inv.setDamagedQuantity(inventory.getDamagedQuantity());
-        
-        cservice.saveInventory(inv);
-        return "forward:/all/catalogue/showinventory/" + inventory.getId();
-    }
-
-
-
 
 
     @RequestMapping(value = "/edit/{id}")
@@ -248,18 +255,5 @@ public class CatalogueController {
 		cservice.usageReport(start, end);
 		return  "reordermsg";
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
