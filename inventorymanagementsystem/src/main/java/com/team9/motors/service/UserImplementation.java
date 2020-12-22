@@ -1,6 +1,7 @@
 package com.team9.motors.service;
 
 import com.team9.motors.interfacemethods.UserInterface;
+import com.team9.motors.model.Role;
 import com.team9.motors.model.User;
 import com.team9.motors.repository.UserRepository;
 import javassist.compiler.Parser;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserImplementation implements UserInterface {
@@ -58,7 +60,13 @@ public class UserImplementation implements UserInterface {
 
 	@Override
 	public String[] findAdminEmail() {
-		//userRepository.
-		return null;
+		List<User> uList = userRepository.findUsersByRole(Role.ADMIN);
+		String[] mList = new String[uList.size()];
+		int counter = 0;
+		for (User user : uList) {
+			mList[counter] = user.getEmail();
+			counter++;
 		}
+		return mList;
+	}
 }

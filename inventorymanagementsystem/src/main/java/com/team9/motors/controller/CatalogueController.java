@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.team9.motors.interfacemethods.CatalogueInterface;
 import com.team9.motors.model.DateSelector;
 import com.team9.motors.model.Inventory;
+import com.team9.motors.model.ProductState;
 import com.team9.motors.model.StockUsage;
 import com.team9.motors.model.StockUsageInventory;
+import com.team9.motors.service.UserImplementation;
 import com.team9.motors.mail.JavaMailUtil;
 
 
@@ -30,9 +32,11 @@ import com.team9.motors.mail.JavaMailUtil;
 @SessionAttributes("userdetails")
 public class CatalogueController {
 
-
     @Autowired
     private CatalogueInterface cservice;
+    
+    @Autowired
+	private UserImplementation userImplementation;
 
     @Autowired
     public void setCatalogue(CatalogueInterface catalogue) {
@@ -75,8 +79,6 @@ public class CatalogueController {
         cservice.deleteStockUsage(customer);
         return "forward:/all/catalogue/customers";
     }
-
-
 
     //add usage
     @RequestMapping(value = "/addusageform/{id}", method=RequestMethod.GET)
@@ -134,7 +136,15 @@ public class CatalogueController {
             dbItem.setQuantity(dbItem.getQuantity() + dbRecord.getQuantity() - record.getQuantity());
 
             cservice.saveStockUsageInventory(record); 
-            JavaMailUtil.changeProductState(dbItem);
+            
+            //--- Mail ---
+            if (dbItem.getQuantity() <= dbItem.getProduct().getReorderLevel()
+    				&& dbItem.getProductState() == ProductState.InStock) {
+            	dbItem.setProductState(ProductState.BelowReorderLevel);
+            	JavaMailUtil.sendEmail(dbItem,userImplementation.findAdminEmail());
+            	cservice.saveInventory(dbItem);
+            }
+            //--- Mail ---
         }
         return "forward:/all/catalogue/showcustomer/" + customer.getId();
     }
@@ -182,11 +192,7 @@ public class CatalogueController {
         
         return "forward:/all/catalogue/showinventory/" + inventory.getId();
     }
-
-
-
-
-
+    
     @RequestMapping(value = "/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, ModelMap model) {
 
@@ -208,7 +214,6 @@ public class CatalogueController {
         cservice.deleteStockUsageInventory(usageRecord);
         return "forward:/all/catalogue/showcustomer/" + customerId;
     }
-
 
     //show the list of StockUsage records (customers list)
     @RequestMapping(value = "/customers")
